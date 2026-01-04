@@ -65,6 +65,12 @@
 <section id="admin" style="display:none">
   <h2>Create Post</h2>
   <textarea id="postText" placeholder="Write post..."></textarea>
+
+  <label>
+    <input type="checkbox" id="privatePost">
+    Admin only (Private post)
+  </label>
+
   <button class="btn" id="publishBtn">Publish</button>
 </section>
 
@@ -84,20 +90,34 @@
   const postsDiv = document.getElementById("posts");
   const postInput = document.getElementById("postText");
 
+  // 🔥 NEW: private checkbox
+  const privateCheckbox = document.getElementById("privatePost");
+
+  let isAdmin = false;
   let posts = JSON.parse(localStorage.getItem("posts")) || [];
 
   // ---------- RENDER POSTS ----------
   function renderPosts() {
     postsDiv.innerHTML = "";
 
-    posts.forEach((text, index) => {
+    posts.forEach((post, index) => {
+      if (post.private && !isAdmin) return;
+
       const div = document.createElement("div");
       div.className = "post";
 
+      let adminButtons = "";
+      if (isAdmin) {
+        adminButtons = `
+          <button onclick="editPost(${index})">✏️ Edit</button>
+          <button onclick="deletePost(${index})">🗑️ Delete</button>
+        `;
+      }
+
       div.innerHTML = `
-        <p>${text}</p>
-        <button onclick="editPost(${index})">✏️ Edit</button>
-        <button onclick="deletePost(${index})">🗑️ Delete</button>
+        <p>${post.text}</p>
+        ${adminButtons}
+        <small>${post.private ? "🔒 Admin only" : "🌍 Public"}</small>
       `;
 
       postsDiv.prepend(div);
@@ -115,9 +135,11 @@
   loginBtn.onclick = () => {
     const pass = document.getElementById("adminPass").value;
     if (pass === PASSWORD) {
+      isAdmin = true;
       loginBox.style.display = "none";
       adminBox.style.display = "block";
       adminBox.scrollIntoView({ behavior: "smooth" });
+      renderPosts();
       alert("Admin Login Successful");
     } else {
       alert("Wrong password");
@@ -129,9 +151,14 @@
     const text = postInput.value.trim();
     if (!text) return;
 
-    posts.push(text);
+    posts.push({
+      text: text,
+      private: privateCheckbox.checked
+    });
+
     localStorage.setItem("posts", JSON.stringify(posts));
     postInput.value = "";
+    privateCheckbox.checked = false;
     renderPosts();
   };
 
@@ -145,10 +172,10 @@
 
   // ---------- EDIT POST ----------
   function editPost(index) {
-    const newText = prompt("Edit your post:", posts[index]);
-    if (newText === null || newText.trim() === "") return;
+    const newText = prompt("Edit post:", posts[index].text);
+    if (!newText) return;
 
-    posts[index] = newText.trim();
+    posts[index].text = newText;
     localStorage.setItem("posts", JSON.stringify(posts));
     renderPosts();
   }
