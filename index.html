@@ -143,35 +143,22 @@ textarea{
 <section>
   <h2>Contact Me</h2>
 
-  <form id="contactForm" action="https://formspree.io/f/xzdzoyyk" method="POST">
+ <form
+  id="contactForm"
+  action="https://formspree.io/f/xzdzoyyk"
+  method="POST"
+>
+  <input type="text" name="name" placeholder="Your Name" required>
+  <input type="email" name="email" placeholder="Your Email" required>
+  <textarea name="message" placeholder="Your Message" required></textarea>
 
-  <input 
-    type="text" 
-    name="name" 
-    placeholder="Your Name" 
-    required
-  >
-
-  <input 
-    type="email" 
-    name="email" 
-    placeholder="Your Email" 
-    required
-  >
-
-  <textarea 
-    name="message" 
-    placeholder="Your Message" 
-    required
-  ></textarea>
-
-  <button type="submit">Send Message</button>
-
+  <button type="submit" class="btn">Send Message</button>
 </form>
 
-<p id="successMsg" style="display:none;color:lime;margin-top:10px;">
-  ✅ Message sent successfully!
+<p id="successMsg" style="display:none; color:#00ff99; margin-top:10px;">
+  ✅ Thank you! Your message has been sent.
 </p>
+
 
 </section>
 
@@ -278,7 +265,35 @@ function editPost(index) {
 /* ================== INITIAL LOAD ================== */
 renderPosts();
 
+const form = document.getElementById("contactForm");
+const successMsg = document.getElementById("successMsg");
+
+form.addEventListener("submit", async function (e) {
+  e.preventDefault(); // ⛔ redirect বন্ধ
+
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: formData,
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (response.ok) {
+      form.reset();
+      successMsg.style.display = "block";
+    } else {
+      alert("❌ Something went wrong. Try again.");
+    }
+  } catch (error) {
+    alert("❌ Network error.");
+  }
+});
 </script>
+
 
 </body>
 </html>
