@@ -177,78 +177,79 @@ textarea{
 
 <!-- ================= SCRIPT ================= -->
 <script>
-/* ===== CONFIG ===== */
+/* ================== CONFIG ================== */
 const PASSWORD = "raj123";
 
-/* ===== ELEMENTS ===== */
+/* ================== ELEMENTS ================== */
 const adminBtn = document.getElementById("adminBtn");
-const loginBox = document.getElementById("login");
 const loginBtn = document.getElementById("loginBtn");
+const publishBtn = document.getElementById("publishBtn");
+
+const loginBox = document.getElementById("login");
 const adminBox = document.getElementById("admin");
 
-const publishBtn = document.getElementById("publishBtn");
 const postInput = document.getElementById("postText");
-const privateCheckbox = document.getElementById("privatePost");
 const postsDiv = document.getElementById("posts");
+const privateCheckbox = document.getElementById("privatePost");
 
-/* ===== STATE ===== */
+/* ================== STATE ================== */
 let isAdmin = false;
 let posts = JSON.parse(localStorage.getItem("posts")) || [];
 
-/* ===== ADMIN LOGIN ===== */
+/* ================== ADMIN LOGIN ================== */
 adminBtn.addEventListener("click", () => {
   loginBox.style.display = "block";
-  loginBox.scrollIntoView({behavior:"smooth"});
+  loginBox.scrollIntoView({ behavior: "smooth" });
 });
 
 loginBtn.addEventListener("click", () => {
   const pass = document.getElementById("adminPass").value;
 
-  if(pass === PASSWORD){
+  if (pass === PASSWORD) {
     isAdmin = true;
     loginBox.style.display = "none";
     adminBox.style.display = "block";
-    adminBox.scrollIntoView({behavior:"smooth"});
+    adminBox.scrollIntoView({ behavior: "smooth" });
     alert("✅ Admin Login Successful");
     renderPosts();
-  }else{
+  } else {
     alert("❌ Wrong Password");
   }
 });
 
-/* ===== ADD POST ===== */
+/* ================== ADD POST ================== */
 publishBtn.addEventListener("click", () => {
   const text = postInput.value.trim();
-  if(!text) return;
+  if (!text) return;
 
   posts.unshift({
-    text:text,
+    text: text,
     private: privateCheckbox.checked
   });
 
   localStorage.setItem("posts", JSON.stringify(posts));
-  postInput.value="";
-  privateCheckbox.checked=false;
+  postInput.value = "";
+  privateCheckbox.checked = false;
   renderPosts();
 });
 
-/* ===== RENDER POSTS ===== */
-function renderPosts(){
-  postsDiv.innerHTML="";
+/* ================== RENDER POSTS ================== */
+function renderPosts() {
+  postsDiv.innerHTML = "";
 
-  posts.forEach((post,index)=>{
-    if(post.private && !isAdmin) return;
+  posts.forEach((post, index) => {
+    if (post.private && !isAdmin) return;
 
     const div = document.createElement("div");
-    div.className="post";
+    div.className = "post";
 
     div.innerHTML = `
       <p>${post.text}</p>
       ${
-        isAdmin ? `
-        <button onclick="editPost(${index})">✏️ Edit</button>
-        <button onclick="deletePost(${index})">🗑️ Delete</button>
-        ` : ""
+        isAdmin
+          ? `<button onclick="editPost(${index})">✏️ Edit</button>
+             <button onclick="deletePost(${index})">🗑️ Delete</button>`
+          : ""
       }
     `;
 
@@ -256,49 +257,27 @@ function renderPosts(){
   });
 }
 
-/* ===== DELETE ===== */
-function deletePost(index){
-  if(!confirm("Delete this post?")) return;
-  posts.splice(index,1);
+/* ================== DELETE ================== */
+function deletePost(index) {
+  if (!confirm("Delete this post?")) return;
+  posts.splice(index, 1);
   localStorage.setItem("posts", JSON.stringify(posts));
   renderPosts();
 }
 
-/* ===== EDIT ===== */
-function editPost(index){
+/* ================== EDIT ================== */
+function editPost(index) {
   const newText = prompt("Edit post:", posts[index].text);
-  if(!newText) return;
+  if (!newText) return;
 
   posts[index].text = newText;
   localStorage.setItem("posts", JSON.stringify(posts));
   renderPosts();
 }
 
-/* ===== INITIAL LOAD ===== */
+/* ================== INITIAL LOAD ================== */
 renderPosts();
 
-/* ===== CONTACT FORM (NO REDIRECT) ===== */
-const form = document.getElementById("contactForm");
-const successMsg = document.getElementById("successMsg");
-
-form.addEventListener("submit", async (e)=>{
-  e.preventDefault();
-
-  const formData = new FormData(form);
-
-  const res = await fetch(form.action,{
-    method: form.method,
-    body: formData,
-    headers:{Accept:"application/json"}
-  });
-
-  if(res.ok){
-    form.reset();
-    successMsg.style.display="block";
-  }else{
-    alert("❌ Something went wrong");
-  }
-});
 </script>
 
 </body>
