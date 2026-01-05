@@ -1,124 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Raj Bag | Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<title>Raj Bag | Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      background:#050b1a;
-      color:#fff;
-      font-family: Arial, sans-serif;
-      margin:0;
-      padding:0;
-    }
-    header {
-      text-align:center;
-      padding:60px 20px;
-    }
-    h1 { color:#00ff99; }
-    .btn {
-      padding:12px 22px;
-      border:none;
-      border-radius:6px;
-      background:#00ff99;
-      color:#000;
-      cursor:pointer;
-      font-weight:bold;
-      margin:8px;
-    }
-    .card {
-      max-width:700px;
-      margin:40px auto;
-      padding:30px;
-      background:#0c1633;
-      border-radius:12px;
-    }
-    input, textarea {
-      width:100%;
-      padding:12px;
-      margin:10px 0;
-      border-radius:6px;
-      border:none;
-    }
-    #successMsg {
-      display:none;
-      color:#00ff99;
-      margin-top:15px;
-      font-weight:bold;
-    }
-  </style>
+<style>
+body{
+  background:#050b1a;
+  color:#fff;
+  font-family:Arial, sans-serif;
+  text-align:center;
+}
+.btn{
+  background:#00c46a;
+  color:#000;
+  padding:10px 18px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  margin:6px;
+}
+input, textarea{
+  width:90%;
+  max-width:400px;
+  padding:10px;
+  margin:8px 0;
+  border-radius:6px;
+  border:none;
+}
+textarea{height:100px}
+section{margin:40px auto}
+.post{
+  background:#0b1635;
+  padding:12px;
+  margin:10px auto;
+  width:90%;
+  max-width:500px;
+  border-radius:8px;
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  <h1>Raj Bag</h1>
-  <p>Data Entry • Data Analytics • Excel Expert</p>
-</header>
+<h1>Raj Bag</h1>
+<p>Data Entry • Data Analytics • Excel Expert</p>
 
-<!-- ================= CONTACT FORM ================= -->
-<div class="card">
+<!-- ================= ADMIN ================= -->
+<button class="btn" id="adminBtn">Admin Login</button>
+
+<div id="loginBox" style="display:none;">
+  <input type="password" id="adminPass" placeholder="Admin Password">
+  <br>
+  <button class="btn" id="loginBtn">Login</button>
+</div>
+
+<div id="adminPanel" style="display:none;">
+  <h3>Admin Panel</h3>
+  <textarea id="postText" placeholder="Write post..."></textarea><br>
+  <button class="btn" id="publishBtn">Publish</button>
+</div>
+
+<section>
+  <h2>Posts</h2>
+  <div id="posts"></div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section>
   <h2>Contact Me</h2>
 
   <form id="contactForm">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Your Email" required>
-    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-
-    <button type="submit" class="btn">Send Message</button>
+    <input type="text" name="name" placeholder="Your Name" required><br>
+    <input type="email" name="email" placeholder="Your Email" required><br>
+    <textarea name="message" placeholder="Your Message" required></textarea><br>
+    <button class="btn" type="submit">Send Message</button>
   </form>
 
-  <p id="successMsg">✅ Thank you! Message sent successfully.</p>
-</div>
+  <p id="successMsg" style="display:none;color:#00ff99;">
+    ✅ Thank you! Message sent successfully.
+  </p>
+</section>
 
 <!-- ================= SCRIPT ================= -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+/* ===== ADMIN SYSTEM ===== */
+const PASSWORD = "raj123";
 
-  const form = document.getElementById("contactForm");
-  const successMsg = document.getElementById("successMsg");
+const adminBtn = document.getElementById("adminBtn");
+const loginBox = document.getElementById("loginBox");
+const loginBtn = document.getElementById("loginBtn");
+const adminPanel = document.getElementById("adminPanel");
+const postText = document.getElementById("postText");
+const publishBtn = document.getElementById("publishBtn");
+const postsDiv = document.getElementById("posts");
 
-  let isSubmitting = false;
+let posts = JSON.parse(localStorage.getItem("posts")) || [];
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault(); // 🚫 redirect বন্ধ
+adminBtn.onclick = () => {
+  loginBox.style.display = "block";
+};
 
-    if (isSubmitting) return;
-    isSubmitting = true;
+loginBtn.onclick = () => {
+  if (adminPass.value === PASSWORD) {
+    loginBox.style.display = "none";
+    adminPanel.style.display = "block";
+    renderPosts();
+  } else {
+    alert("❌ Wrong password");
+  }
+};
 
-    const formData = new FormData(form);
+publishBtn.onclick = () => {
+  if (!postText.value.trim()) return;
+  posts.unshift(postText.value);
+  localStorage.setItem("posts", JSON.stringify(posts));
+  postText.value = "";
+  renderPosts();
+};
 
-    try {
-      const response = await fetch("https://formspree.io/f/xzdooyyk", {
-        method: "POST",
-        body: formData,
-        headers: {
-          "Accept": "application/json"
-        }
-      });
-
-      if (response.ok) {
-        form.reset();
-        successMsg.style.display = "block";
-
-        // ⏱️ 5 sec পরে hide
-        setTimeout(() => {
-          successMsg.style.display = "none";
-        }, 5000);
-
-      } else {
-        alert("❌ Submission failed");
-      }
-
-    } catch (err) {
-      alert("❌ Network error");
-    }
-
-    isSubmitting = false;
+function renderPosts(){
+  postsDiv.innerHTML = "";
+  posts.forEach(p => {
+    const d = document.createElement("div");
+    d.className = "post";
+    d.innerText = p;
+    postsDiv.appendChild(d);
   });
+}
+renderPosts();
 
+/* ===== CONTACT FORM (FORMSPREE) ===== */
+const form = document.getElementById("contactForm");
+const successMsg = document.getElementById("successMsg");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault(); // ❌ redirect বন্ধ
+
+  const formData = new FormData(form);
+
+  try {
+    const res = await fetch("https://formspree.io/f/xzdzoyyk", {
+      method: "POST",
+      body: formData,
+      headers: { "Accept": "application/json" }
+    });
+
+    if (res.ok) {
+      form.reset();
+      successMsg.style.display = "block";
+
+      setTimeout(() => {
+        successMsg.style.display = "none";
+      }, 5000);
+
+    } else {
+      alert("❌ Submission failed");
+    }
+  } catch {
+    alert("❌ Network error");
+  }
 });
 </script>
 
