@@ -285,14 +285,22 @@ document.addEventListener("DOMContentLoaded", () => {
       if (response.ok) {
         form.reset();
         successMsg.style.display = "block";
+
+        // ⏱️ 5 সেকেন্ড পরে auto hide
+        setTimeout(() => {
+          successMsg.style.display = "none";
+        }, 5000);
+
       } else {
         alert("❌ Submission failed");
       }
-    } catch (err) {
+
+    } catch (error) {
       alert("❌ Network error");
     }
   });
 });
+
 </script>
 
 
