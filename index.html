@@ -98,106 +98,105 @@
 
 
 <script>
-  const PASSWORD = "raj123";
+/* ================= CONFIG ================= */
+const PASSWORD = "raj123";
 
-  const adminBtn = document.getElementById("adminBtn");
-  const loginBox = document.getElementById("login");
-  const adminBox = document.getElementById("admin");
-  const loginBtn = document.getElementById("loginBtn");
-  const publishBtn = document.getElementById("publishBtn");
-  const postsDiv = document.getElementById("posts");
-  const postInput = document.getElementById("postText");
+/* ================= ELEMENTS ================= */
+const adminBtn = document.getElementById("adminBtn");
+const loginBox = document.getElementById("login");
+const loginBtn = document.getElementById("loginBtn");
+const adminBox = document.getElementById("admin");
 
-  // 🔥 NEW: private checkbox
-  const privateCheckbox = document.getElementById("privatePost");
+const postInput = document.getElementById("postText");
+const publishBtn = document.getElementById("publishBtn");
+const postsDiv = document.getElementById("posts");
+const privateCheckbox = document.getElementById("privatePost");
 
-  let isAdmin = false;
-  let posts = JSON.parse(localStorage.getItem("posts")) || [];
+/* ================= STATE ================= */
+let isAdmin = false;
+let posts = JSON.parse(localStorage.getItem("posts")) || [];
 
-  // ---------- RENDER POSTS ----------
-  function renderPosts() {
-    postsDiv.innerHTML = "";
+/* ================= ADMIN OPEN ================= */
+adminBtn.addEventListener("click", () => {
+  loginBox.style.display = "block";
+  loginBox.scrollIntoView({ behavior: "smooth" });
+});
 
-    posts.forEach((post, index) => {
-      if (post.private && !isAdmin) return;
+/* ================= LOGIN ================= */
+loginBtn.addEventListener("click", () => {
+  const pass = document.getElementById("adminPass").value;
 
-      const div = document.createElement("div");
-      div.className = "post";
-
-      let adminButtons = "";
-      if (isAdmin) {
-        adminButtons = `
-          <button onclick="editPost(${index})">✏️ Edit</button>
-          <button onclick="deletePost(${index})">🗑️ Delete</button>
-        `;
-      }
-
-      div.innerHTML = `
-        <p>${post.text}</p>
-        ${adminButtons}
-        <small>${post.private ? "🔒 Admin only" : "🌍 Public"}</small>
-      `;
-
-      postsDiv.prepend(div);
-    });
+  if (pass === PASSWORD) {
+    isAdmin = true;
+    loginBox.style.display = "none";
+    adminBox.style.display = "block";
+    adminBox.scrollIntoView({ behavior: "smooth" });
+    alert("Admin Login Successful ✅");
+    renderPosts();
+  } else {
+    alert("Wrong Password ❌");
   }
+});
 
+/* ================= ADD POST ================= */
+publishBtn.addEventListener("click", () => {
+  const text = postInput.value.trim();
+  if (!text) return;
+
+  posts.unshift({
+    text: text,
+    private: privateCheckbox.checked
+  });
+
+  localStorage.setItem("posts", JSON.stringify(posts));
+  postInput.value = "";
+  privateCheckbox.checked = false;
   renderPosts();
+});
 
-  // ---------- ADMIN LOGIN ----------
-  adminBtn.onclick = () => {
-    loginBox.style.display = "block";
-    loginBox.scrollIntoView({ behavior: "smooth" });
-  };
+/* ================= RENDER POSTS ================= */
+function renderPosts() {
+  postsDiv.innerHTML = "";
 
-  loginBtn.onclick = () => {
-    const pass = document.getElementById("adminPass").value;
-    if (pass === PASSWORD) {
-      isAdmin = true;
-      loginBox.style.display = "none";
-      adminBox.style.display = "block";
-      adminBox.scrollIntoView({ behavior: "smooth" });
-      renderPosts();
-      alert("Admin Login Successful");
-    } else {
-      alert("Wrong password");
-    }
-  };
+  posts.forEach((post, index) => {
+    if (post.private && !isAdmin) return;
 
-  // ---------- ADD POST ----------
-  publishBtn.onclick = () => {
-    const text = postInput.value.trim();
-    if (!text) return;
+    const div = document.createElement("div");
+    div.className = "post";
+    div.innerHTML = `
+      <p>${post.text}</p>
+      ${
+        isAdmin
+          ? `<button onclick="editPost(${index})">✏ Edit</button>
+             <button onclick="deletePost(${index})">🗑 Delete</button>`
+          : ""
+      }
+    `;
+    postsDiv.appendChild(div);
+  });
+}
 
-    posts.push({
-      text: text,
-      private: privateCheckbox.checked
-    });
+/* ================= DELETE POST ================= */
+function deletePost(index) {
+  if (!confirm("Delete this post?")) return;
+  posts.splice(index, 1);
+  localStorage.setItem("posts", JSON.stringify(posts));
+  renderPosts();
+}
 
-    localStorage.setItem("posts", JSON.stringify(posts));
-    postInput.value = "";
-    privateCheckbox.checked = false;
-    renderPosts();
-  };
+/* ================= EDIT POST ================= */
+function editPost(index) {
+  const newText = prompt("Edit post:", posts[index].text);
+  if (!newText) return;
+  posts[index].text = newText;
+  localStorage.setItem("posts", JSON.stringify(posts));
+  renderPosts();
+}
 
-  // ---------- DELETE POST ----------
-  function deletePost(index) {
-    if (!confirm("Delete this post?")) return;
-    posts.splice(index, 1);
-    localStorage.setItem("posts", JSON.stringify(posts));
-    renderPosts();
-  }
-
-  // ---------- EDIT POST ----------
-  function editPost(index) {
-    const newText = prompt("Edit post:", posts[index].text);
-    if (!newText) return;
-
-    posts[index].text = newText;
-    localStorage.setItem("posts", JSON.stringify(posts));
-    renderPosts();
-  }
+/* ================= INITIAL LOAD ================= */
+renderPosts();
 </script>
+
 
 </body>
 </html>
