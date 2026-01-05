@@ -1,281 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Raj Bag | Portfolio</title>
+  <meta charset="UTF-8" />
+  <title>Raj Bag | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<style>
-*{
-  box-sizing:border-box;
-  font-family:Arial, Helvetica, sans-serif;
-}
-
-body{
-  margin:0;
-  background:#050b1e;
-  color:#fff;
-  text-align:center;
-}
-
-/* ---------- HEADER ---------- */
-header{
-  padding:60px 20px;
-}
-
-header h1{
-  color:#2ecc71;
-  font-size:42px;
-  margin-bottom:10px;
-}
-
-header p{
-  opacity:0.9;
-}
-
-.btn{
-  padding:12px 22px;
-  margin:8px;
-  border:none;
-  border-radius:8px;
-  background:#2ecc71;
-  color:#000;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.btn:hover{
-  opacity:0.85;
-}
-
-/* ---------- SECTIONS ---------- */
-section{
-  max-width:800px;
-  margin:40px auto;
-  padding:20px;
-  background:#0b1437;
-  border-radius:12px;
-}
-
-/* ---------- ADMIN ---------- */
-#login, #admin{
-  display:none;
-}
-
-input, textarea{
-  width:100%;
-  padding:12px;
-  margin:10px 0;
-  border-radius:6px;
-  border:none;
-}
-
-textarea{
-  min-height:100px;
-}
-
-/* ---------- POSTS ---------- */
-.post{
-  background:#111c4d;
-  padding:15px;
-  border-radius:8px;
-  margin-bottom:12px;
-  text-align:left;
-}
-
-.post button{
-  margin-right:8px;
-  margin-top:8px;
-}
-
-/* ---------- CONTACT ---------- */
-#successMsg{
-  display:none;
-  color:#2ecc71;
-  margin-top:10px;
-}
-</style>
+  <style>
+    body {
+      background:#050b1a;
+      color:#fff;
+      font-family: Arial, sans-serif;
+      margin:0;
+      padding:0;
+    }
+    header {
+      text-align:center;
+      padding:60px 20px;
+    }
+    h1 { color:#00ff99; }
+    .btn {
+      padding:12px 22px;
+      border:none;
+      border-radius:6px;
+      background:#00ff99;
+      color:#000;
+      cursor:pointer;
+      font-weight:bold;
+      margin:8px;
+    }
+    .card {
+      max-width:700px;
+      margin:40px auto;
+      padding:30px;
+      background:#0c1633;
+      border-radius:12px;
+    }
+    input, textarea {
+      width:100%;
+      padding:12px;
+      margin:10px 0;
+      border-radius:6px;
+      border:none;
+    }
+    #successMsg {
+      display:none;
+      color:#00ff99;
+      margin-top:15px;
+      font-weight:bold;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ================= HEADER ================= -->
 <header>
   <h1>Raj Bag</h1>
   <p>Data Entry • Data Analytics • Excel Expert</p>
-
-  <button class="btn" id="adminBtn">Admin Login</button>
-
-  <a href="Raj_Bag_Resume.pdf" download>
-    <button class="btn">⬇️ Download Resume</button>
-  </a>
 </header>
 
-<!-- ================= ADMIN LOGIN ================= -->
-<section id="login">
-  <h2>Admin Login</h2>
-  <input type="password" id="adminPass" placeholder="Admin Password">
-  <button class="btn" id="loginBtn">Login</button>
-</section>
-
-<!-- ================= ADMIN PANEL ================= -->
-<section id="admin">
-  <h2>Create Post</h2>
-
-  <textarea id="postText" placeholder="Write post..."></textarea>
-
-  <label>
-    <input type="checkbox" id="privatePost">
-    Private post (Admin only)
-  </label>
-  <br><br>
-
-  <button class="btn" id="publishBtn">Publish</button>
-</section>
-
-<!-- ================= POSTS ================= -->
-<section>
-  <h2>My Posts</h2>
-  <div id="posts"></div>
-</section>
-
-<!-- ================= CONTACT ================= -->
-<section>
+<!-- ================= CONTACT FORM ================= -->
+<div class="card">
   <h2>Contact Me</h2>
 
-<form id="contactForm">
-  <input type="text" name="name" placeholder="Your Name" required>
-  <input type="email" name="email" placeholder="Your Email" required>
-  <textarea name="message" placeholder="Your Message" required></textarea>
+  <form id="contactForm">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
 
-  <button type="submit">Send Message</button>
-</form>
+    <button type="submit" class="btn">Send Message</button>
+  </form>
 
-<p id="successMsg" style="display:none; color:#00ff99;">
-  ✅ Thank you! Message sent successfully.
-</p>
-
-
-
-</section>
+  <p id="successMsg">✅ Thank you! Message sent successfully.</p>
+</div>
 
 <!-- ================= SCRIPT ================= -->
 <script>
-/* ================== CONFIG ================== */
-const PASSWORD = "raj123";
-
-/* ================== ELEMENTS ================== */
-const adminBtn = document.getElementById("adminBtn");
-const loginBtn = document.getElementById("loginBtn");
-const publishBtn = document.getElementById("publishBtn");
-
-const loginBox = document.getElementById("login");
-const adminBox = document.getElementById("admin");
-
-const postInput = document.getElementById("postText");
-const postsDiv = document.getElementById("posts");
-const privateCheckbox = document.getElementById("privatePost");
-
-/* ================== STATE ================== */
-let isAdmin = false;
-let posts = JSON.parse(localStorage.getItem("posts")) || [];
-
-/* ================== ADMIN LOGIN ================== */
-adminBtn.addEventListener("click", () => {
-  loginBox.style.display = "block";
-  loginBox.scrollIntoView({ behavior: "smooth" });
-});
-
-loginBtn.addEventListener("click", () => {
-  const pass = document.getElementById("adminPass").value;
-
-  if (pass === PASSWORD) {
-    isAdmin = true;
-    loginBox.style.display = "none";
-    adminBox.style.display = "block";
-    adminBox.scrollIntoView({ behavior: "smooth" });
-    alert("✅ Admin Login Successful");
-    renderPosts();
-  } else {
-    alert("❌ Wrong Password");
-  }
-});
-
-/* ================== ADD POST ================== */
-publishBtn.addEventListener("click", () => {
-  const text = postInput.value.trim();
-  if (!text) return;
-
-  posts.unshift({
-    text: text,
-    private: privateCheckbox.checked
-  });
-
-  localStorage.setItem("posts", JSON.stringify(posts));
-  postInput.value = "";
-  privateCheckbox.checked = false;
-  renderPosts();
-});
-
-/* ================== RENDER POSTS ================== */
-function renderPosts() {
-  postsDiv.innerHTML = "";
-
-  posts.forEach((post, index) => {
-    if (post.private && !isAdmin) return;
-
-    const div = document.createElement("div");
-    div.className = "post";
-
-    div.innerHTML = `
-      <p>${post.text}</p>
-      ${
-        isAdmin
-          ? `<button onclick="editPost(${index})">✏️ Edit</button>
-             <button onclick="deletePost(${index})">🗑️ Delete</button>`
-          : ""
-      }
-    `;
-
-    postsDiv.appendChild(div);
-  });
-}
-
-/* ================== DELETE ================== */
-function deletePost(index) {
-  if (!confirm("Delete this post?")) return;
-  posts.splice(index, 1);
-  localStorage.setItem("posts", JSON.stringify(posts));
-  renderPosts();
-}
-
-/* ================== EDIT ================== */
-function editPost(index) {
-  const newText = prompt("Edit post:", posts[index].text);
-  if (!newText) return;
-
-  posts[index].text = newText;
-  localStorage.setItem("posts", JSON.stringify(posts));
-  renderPosts();
-}
-
-/* ================== INITIAL LOAD ================== */
-renderPosts();
-
-<script>
-
 document.addEventListener("DOMContentLoaded", () => {
+
   const form = document.getElementById("contactForm");
   const successMsg = document.getElementById("successMsg");
+
+  let isSubmitting = false;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault(); // 🚫 redirect বন্ধ
 
+    if (isSubmitting) return;
+    isSubmitting = true;
+
     const formData = new FormData(form);
 
     try {
-      const response = await fetch("fetch("https://formspree.io/f/xzdooyyk", {
-
+      const response = await fetch("https://formspree.io/f/xzdooyyk", {
         method: "POST",
         body: formData,
         headers: {
@@ -287,19 +103,23 @@ document.addEventListener("DOMContentLoaded", () => {
         form.reset();
         successMsg.style.display = "block";
 
+        // ⏱️ 5 sec পরে hide
         setTimeout(() => {
           successMsg.style.display = "none";
         }, 5000);
+
       } else {
         alert("❌ Submission failed");
       }
-    } catch (error) {
+
+    } catch (err) {
       alert("❌ Network error");
     }
+
+    isSubmitting = false;
   });
+
 });
-
-
 </script>
 
 </body>
