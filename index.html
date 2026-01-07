@@ -143,17 +143,16 @@ textarea{
 <section>
   <h2>Contact Me</h2>
 
+<iframe name="hidden_iframe" style="display:none;"></iframe>
   <form
   id="contactForm"
   action="https://formspree.io/f/xzdzoyyk"
   method="POST"
+  target="hidden_iframe"
 >
   <input type="text" name="name" placeholder="Your Name" required>
   <input type="email" name="email" placeholder="Your Email" required>
   <textarea name="message" placeholder="Your Message" required></textarea>
-
-  <!-- Formspree settings -->
-  <input type="hidden" name="_captcha" value="false">
 
   <button class="btn" type="submit">Send Message</button>
 </form>
