@@ -1,168 +1,126 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Raj Bag | Portfolio</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body{
-  background:#050b1a;
-  color:#fff;
-  font-family:Arial, sans-serif;
-  text-align:center;
-}
-.btn{
-  background:#00c46a;
-  color:#000;
-  padding:10px 18px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-  margin:6px;
-}
-input, textarea{
-  width:90%;
-  max-width:400px;
-  padding:10px;
-  margin:8px 0;
-  border-radius:6px;
-  border:none;
-}
-textarea{height:100px}
-section{margin:40px auto}
-.post{
-  background:#0b1635;
-  padding:12px;
-  margin:10px auto;
-  width:90%;
-  max-width:500px;
-  border-radius:8px;
-}
-</style>
-</head>
-
-<body>
-
-<h1>Raj Bag</h1>
-<p>Data Entry • Data Analytics • Excel Expert</p>
-
-<!-- ================= ADMIN ================= -->
-<button class="btn" id="adminBtn">Admin Login</button>
-
-<div id="loginBox" style="display:none;">
-  <input type="password" id="adminPass" placeholder="Admin Password">
-  <br>
-  <button class="btn" id="loginBtn">Login</button>
-</div>
-
-<div id="adminPanel" style="display:none;">
-  <h3>Admin Panel</h3>
-  <textarea id="postText" placeholder="Write post..."></textarea><br>
-  <button class="btn" id="publishBtn">Publish</button>
-</div>
-
-<section>
-  <h2>Posts</h2>
-  <div id="posts"></div>
-</section>
-
-<!-- ================= CONTACT ================= -->
-<section>
-  <h2>Contact Me</h2>
-
-  <form id="contactForm">
-    <input type="text" name="name" placeholder="Your Name" required><br>
-    <input type="email" name="email" placeholder="Your Email" required><br>
-    <textarea name="message" placeholder="Your Message" required></textarea><br>
-    <button class="btn" type="submit">Send Message</button>
-  </form>
-
-  <p id="successMsg" style="display:none;color:#00ff99;">
-    ✅ Thank you! Message sent successfully.
-  </p>
-</section>
-
-<!-- ================= SCRIPT ================= -->
 <script>
-/* ===== ADMIN SYSTEM ===== */
+/* ================= CONFIG ================= */
 const PASSWORD = "raj123";
 
+/* ================= ELEMENTS ================= */
 const adminBtn = document.getElementById("adminBtn");
-const loginBox = document.getElementById("loginBox");
+const loginBox = document.getElementById("login");
 const loginBtn = document.getElementById("loginBtn");
-const adminPanel = document.getElementById("adminPanel");
-const postText = document.getElementById("postText");
+const adminBox = document.getElementById("admin");
+
 const publishBtn = document.getElementById("publishBtn");
+const postInput = document.getElementById("postText");
+const privateCheckbox = document.getElementById("privatePost");
 const postsDiv = document.getElementById("posts");
 
+/* ================= STATE ================= */
+let isAdmin = false;
 let posts = JSON.parse(localStorage.getItem("posts")) || [];
 
-adminBtn.onclick = () => {
+/* ================= ADMIN LOGIN ================= */
+adminBtn.addEventListener("click", () => {
   loginBox.style.display = "block";
-};
+  loginBox.scrollIntoView({ behavior: "smooth" });
+});
 
-loginBtn.onclick = () => {
-  if (adminPass.value === PASSWORD) {
+loginBtn.addEventListener("click", () => {
+  const pass = document.getElementById("adminPass").value;
+
+  if (pass === PASSWORD) {
+    isAdmin = true;
     loginBox.style.display = "none";
-    adminPanel.style.display = "block";
+    adminBox.style.display = "block";
+    adminBox.scrollIntoView({ behavior: "smooth" });
+    alert("✅ Admin Login Successful");
     renderPosts();
   } else {
-    alert("❌ Wrong password");
+    alert("❌ Wrong Password");
   }
-};
+});
 
-publishBtn.onclick = () => {
-  if (!postText.value.trim()) return;
-  posts.unshift(postText.value);
+/* ================= ADD POST ================= */
+publishBtn.addEventListener("click", () => {
+  const text = postInput.value.trim();
+  if (!text) return;
+
+  posts.unshift({
+    text: text,
+    private: privateCheckbox.checked
+  });
+
   localStorage.setItem("posts", JSON.stringify(posts));
-  postText.value = "";
+  postInput.value = "";
+  privateCheckbox.checked = false;
   renderPosts();
-};
+});
 
-function renderPosts(){
+/* ================= RENDER POSTS ================= */
+function renderPosts() {
   postsDiv.innerHTML = "";
-  posts.forEach(p => {
-    const d = document.createElement("div");
-    d.className = "post";
-    d.innerText = p;
-    postsDiv.appendChild(d);
+
+  posts.forEach((post, index) => {
+    if (post.private && !isAdmin) return;
+
+    const div = document.createElement("div");
+    div.className = "post";
+
+    div.innerHTML = `
+      <p>${post.text}</p>
+      ${
+        isAdmin
+          ? `<button onclick="editPost(${index})">✏️ Edit</button>
+             <button onclick="deletePost(${index})">🗑️ Delete</button>`
+          : ""
+      }
+    `;
+
+    postsDiv.appendChild(div);
   });
 }
+
+/* ================= DELETE POST ================= */
+function deletePost(index) {
+  if (!confirm("Delete this post?")) return;
+  posts.splice(index, 1);
+  localStorage.setItem("posts", JSON.stringify(posts));
+  renderPosts();
+}
+
+/* ================= EDIT POST ================= */
+function editPost(index) {
+  const newText = prompt("Edit post:", posts[index].text);
+  if (!newText) return;
+
+  posts[index].text = newText;
+  localStorage.setItem("posts", JSON.stringify(posts));
+  renderPosts();
+}
+
+/* ================= INITIAL LOAD ================= */
 renderPosts();
 
-/* ===== CONTACT FORM (FORMSPREE) ===== */
+/* ================= CONTACT FORM (FormsPree) ================= */
 const form = document.getElementById("contactForm");
 const successMsg = document.getElementById("successMsg");
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault(); // ❌ redirect বন্ধ
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  const formData = new FormData(form);
+    const formData = new FormData(form);
 
-  try {
-    const res = await fetch("https://formspree.io/f/xzdzoyyk", {
-      method: "POST",
+    const response = await fetch(form.action, {
+      method: form.method,
       body: formData,
-      headers: { "Accept": "application/json" }
+      headers: { Accept: "application/json" }
     });
 
-    if (res.ok) {
+    if (response.ok) {
       form.reset();
       successMsg.style.display = "block";
-
-      setTimeout(() => {
-        successMsg.style.display = "none";
-      }, 5000);
-
     } else {
-      alert("❌ Submission failed");
+      alert("❌ Something went wrong");
     }
-  } catch {
-    alert("❌ Network error");
-  }
-});
+  });
+}
 </script>
-
-</body>
-</html>
