@@ -140,26 +140,31 @@ textarea{
 </section>
 
 <!-- ================= CONTACT ================= -->
+<!-- ================= CONTACT ================= -->
+<!-- ================= CONTACT ================= -->
 <section>
   <h2>Contact Me</h2>
 
-<iframe name="hidden_iframe" style="display:none;"></iframe>
+  <!-- 🔒 Redirect আটকানোর জন্য hidden iframe -->
+  <iframe name="hidden_iframe" style="display:none;"></iframe>
+
   <form
-  id="contactForm"
-  action="https://formspree.io/f/xzdzoyyk"
-  method="POST"
-  target="hidden_iframe"
->
-  <input type="text" name="name" placeholder="Your Name" required>
-  <input type="email" name="email" placeholder="Your Email" required>
-  <textarea name="message" placeholder="Your Message" required></textarea>
+    action="https://formspree.io/f/xzdzoyyk"
+    method="POST"
+    target="hidden_iframe"
+    onsubmit="showThankYou()"
+  >
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" placeholder="Your Message" required></textarea>
+    <button class="btn" type="submit">Send Message</button>
+  </form>
 
-  <button class="btn" type="submit">Send Message</button>
-</form>
+  <p id="successMsg" style="display:none; color:#2ecc71; margin-top:10px;">
+    ✅ Thank you! Message sent successfully.
+  </p>
+</section>
 
-<p id="successMsg" style="display:none; color:#2ecc71;">
-  ✅ Thank you! Message sent successfully.
-</p>
 
 <!-- ================= SCRIPT ================= -->
 <script>
@@ -287,14 +292,15 @@ form.addEventListener("submit", async (e)=>{
 const form = document.getElementById("contactForm");
 const successMsg = document.getElementById("successMsg");
 
-form.addEventListener("submit", () => {
-  successMsg.style.display = "block";
 
-  // ⏱️ 5 সেকেন্ড পরে auto hide
+function showThankYou() {
+  const msg = document.getElementById("successMsg");
+  msg.style.display = "block";
+
   setTimeout(() => {
-    successMsg.style.display = "none";
+    msg.style.display = "none";
   }, 5000);
-});
+}
 
 </script>
 
