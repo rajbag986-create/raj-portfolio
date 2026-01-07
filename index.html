@@ -38,6 +38,10 @@ input,textarea{width:100%;padding:12px;margin:10px 0;border-radius:6px;border:no
 </section>
 
 <section id="admin">
+ <button class="btn" id="logoutBtn" style="background:#ff6b6b;">
+    Logout
+  </button>
+
   <h2>Create Post</h2>
   <textarea id="postText" placeholder="Write post..."></textarea>
   <label><input type="checkbox" id="privatePost"> Private</label><br><br>
@@ -68,6 +72,7 @@ input,textarea{width:100%;padding:12px;margin:10px 0;border-radius:6px;border:no
   <p id="successMsg" style="display:none;color:#2ecc71;margin-top:10px">
     ✅ Thank you! Message sent successfully.
   </p>
+
 </section>
 
 <script>
@@ -91,6 +96,8 @@ adminBtn.onclick=()=>{
 loginBtn.onclick=()=>{
   if(document.getElementById("adminPass").value===PASSWORD){
     isAdmin=true;
+ localStorage.setItem("isAdmin", "true"); 
+
     loginBox.style.display="none";
     adminBox.style.display="block";
     renderPosts();
@@ -142,6 +149,30 @@ function showThankYou(){
   m.style.display="block";
   setTimeout(()=>m.style.display="none",5000);
 }
+
+// ===== LOGOUT BUTTON =====
+const logoutBtn = document.getElementById("logoutBtn");
+
+logoutBtn.onclick = () => {
+  isAdmin = false;
+
+  // admin panel hide
+  adminBox.style.display = "none";
+  loginBox.style.display = "none";
+
+  // login state clear
+  localStorage.removeItem("isAdmin");
+
+  // posts refresh (public view)
+  renderPosts();
+
+  alert("✅ Logged out successfully");
+
+if (localStorage.getItem("isAdmin") === "true") {
+  isAdmin = true;
+  adminBox.style.display = "block";
+}
+
 </script>
 
 </body>
