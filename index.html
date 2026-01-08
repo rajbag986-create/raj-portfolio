@@ -6,16 +6,113 @@
 <title>Raj Bag | Portfolio</title>
 
 <style>
-*{box-sizing:border-box;font-family:Arial;}
-body{margin:0;background:#050b1e;color:#fff;text-align:center}
-header{padding:60px 20px}
-header h1{color:#2ecc71;font-size:42px}
-.btn{padding:12px 22px;margin:8px;border:none;border-radius:8px;background:#2ecc71;color:#000;font-weight:bold;cursor:pointer}
-section{max-width:800px;margin:40px auto;padding:20px;background:#0b1437;border-radius:12px}
-#login,#admin{display:none}
-input,textarea{width:100%;padding:12px;margin:10px 0;border-radius:6px;border:none}
-.post{background:#111c4d;padding:15px;border-radius:8px;margin-bottom:12px;text-align:left}
+/* ===== GLOBAL RESET ===== */
+*{
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  margin: 0;
+  background: #050b1e;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* ===== HEADER ===== */
+header{
+  padding: 60px 20px;
+}
+
+header h1{
+  color: #2ecc71;
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+header p{
+  opacity: 0.9;
+}
+
+/* ===== BUTTONS (CLICK FIX INCLUDED) ===== */
+.btn{
+  padding: 12px 22px;
+  margin: 8px;
+  border: none;
+  border-radius: 8px;
+  background: #2ecc71;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+
+  /* 🔥 CLICK FIX */
+  pointer-events: auto;
+  position: relative;
+  z-index: 10;
+}
+
+.btn:hover{
+  opacity: 0.85;
+}
+
+/* ===== SECTIONS ===== */
+section{
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #0b1437;
+  border-radius: 12px;
+
+  /* click safe */
+  position: relative;
+  z-index: 5;
+}
+
+/* ===== ADMIN PANELS ===== */
+#login,
+#admin{
+  display: none;
+}
+
+/* ===== INPUTS ===== */
+input,
+textarea{
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: none;
+}
+
+textarea{
+  min-height: 100px;
+}
+
+/* ===== POSTS ===== */
+.post{
+  background: #111c4d;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+/* ===== IFRAME (FORM FIX) ===== */
+iframe{
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+/* ===== SAFETY: NO OVERLAY BLOCKING ===== */
+a,
+button{
+  pointer-events: auto;
+  position: relative;
+  z-index: 10;
+}
 </style>
+
 </head>
 
 <body>
