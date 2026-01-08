@@ -112,6 +112,18 @@ textarea{min-height:100px}
   </label><br><br>
 
   <button class="btn" id="publishBtn">Publish</button>
+
+<hr style="margin:30px 0;">
+
+<h3>Change Admin Password</h3>
+
+<input type="password" id="oldPass" placeholder="Current Password">
+<input type="password" id="newPass" placeholder="New Password">
+
+<button class="btn" id="changePassBtn">
+  Change Password
+</button>
+
 </section>
 
 <!-- POSTS -->
@@ -159,7 +171,11 @@ adminBtn.onclick = () => {
 };
 
 loginBtn.onclick = () => {
-  if(document.getElementById("adminPass").value === PASSWORD){
+  if (
+  document.getElementById("adminPass").value ===
+  localStorage.getItem("adminPassword")
+) {
+
     isAdmin = true;
     loginBox.style.display="none";
     adminBox.style.display="block";
@@ -242,9 +258,41 @@ form.addEventListener("submit", async e=>{
     alert("Submission failed");
   }
 });
+// ===== PASSWORD CHANGE SYSTEM =====
+
+// default password (first time)
+if (!localStorage.getItem("adminPassword")) {
+  localStorage.setItem("adminPassword", PASSWORD);
+}
+
+// password change button
+const changePassBtn = document.getElementById("changePassBtn");
+
+changePassBtn.onclick = () => {
+  const oldPass = document.getElementById("oldPass").value;
+  const newPass = document.getElementById("newPass").value;
+
+  const savedPass = localStorage.getItem("adminPassword");
+
+  if (oldPass !== savedPass) {
+    alert("❌ Current password is wrong");
+    return;
+  }
+
+  if (newPass.length < 4) {
+    alert("❌ New password must be at least 4 characters");
+    return;
+  }
+
+  localStorage.setItem("adminPassword", newPass);
+
+  alert("✅ Password changed successfully");
+
+  document.getElementById("oldPass").value = "";
+  document.getElementById("newPass").value = "";
+};
+
 </script>
 
 </body>
 </html>
-
-<!-- stable version -->
