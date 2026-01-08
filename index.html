@@ -191,11 +191,12 @@ publishBtn.onclick = () => {
   if(!postInput.value.trim()) return;
 
   posts.unshift({
-    text:postInput.value,
-    private:privateCheckbox.checked
+    text: postInput.value,
+    private: privateCheckbox.checked,
+    time: new Date().toLocaleString() // 🕒 date & time
   });
 
-  localStorage.setItem("posts",JSON.stringify(posts));
+  localStorage.setItem("posts", JSON.stringify(posts));
   postInput.value="";
   privateCheckbox.checked=false;
   renderPosts();
@@ -203,18 +204,18 @@ publishBtn.onclick = () => {
 
 /* RENDER POSTS */
 function renderPosts(){
-  postsDiv.innerHTML="";
-  posts.forEach((p,i)=>{
-    if(p.private && !isAdmin) return;
+  postsDiv.innerHTML += `
+  <div class="post">
+    <small style="opacity:0.7;">
+      🕒 ${p.time || "—"}
+    </small>
+    <p>${p.text}</p>
+    ${isAdmin ? `
+      <button onclick="editPost(${i})">Edit</button>
+      <button onclick="deletePost(${i})">Delete</button>
+    ` : ""}
+  </div>`;
 
-    postsDiv.innerHTML += `
-      <div class="post">
-        <p>${p.text}</p>
-        ${isAdmin ? `
-        <button onclick="editPost(${i})">Edit</button>
-        <button onclick="deletePost(${i})">Delete</button>
-        ` : ""}
-      </div>`;
   });
 }
 
