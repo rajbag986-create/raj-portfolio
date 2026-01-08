@@ -1,276 +1,134 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Raj Bag | Portfolio</title>
-
-<style>
-/* ===== GLOBAL RESET ===== */
-*{
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-body{
-  margin: 0;
-  background: #050b1e;
-  color: #ffffff;
-  text-align: center;
-}
-
-/* ===== HEADER ===== */
-header{
-  padding: 60px 20px;
-}
-
-header h1{
-  color: #2ecc71;
-  font-size: 42px;
-  margin-bottom: 10px;
-}
-
-header p{
-  opacity: 0.9;
-}
-
-/* ===== BUTTONS (CLICK FIX INCLUDED) ===== */
-.btn{
-  padding: 12px 22px;
-  margin: 8px;
-  border: none;
-  border-radius: 8px;
-  background: #2ecc71;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-
-  /* 🔥 CLICK FIX */
-  pointer-events: auto;
-  position: relative;
-  z-index: 10;
-}
-
-.btn:hover{
-  opacity: 0.85;
-}
-
-/* ===== SECTIONS ===== */
-section{
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #0b1437;
-  border-radius: 12px;
-
-  /* click safe */
-  position: relative;
-  z-index: 5;
-}
-
-/* ===== ADMIN PANELS ===== */
-#login,
-#admin{
-  display: none;
-}
-
-/* ===== INPUTS ===== */
-input,
-textarea{
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 6px;
-  border: none;
-}
-
-textarea{
-  min-height: 100px;
-}
-
-/* ===== POSTS ===== */
-.post{
-  background: #111c4d;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  text-align: left;
-}
-
-/* ===== IFRAME (FORM FIX) ===== */
-iframe{
-  pointer-events: none;
-  position: absolute;
-  z-index: 0;
-}
-
-/* ===== SAFETY: NO OVERLAY BLOCKING ===== */
-a,
-button{
-  pointer-events: auto;
-  position: relative;
-  z-index: 10;
-}
-</style>
-
-</head>
-
-<body>
-
-<header>
-  <h1>Raj Bag</h1>
-  <p>Data Entry • Data Analytics • Excel Expert</p>
-
-  <button class="btn" id="adminBtn">Admin Login</button>
-
-  <a href="Raj_Bag_Resume.pdf" download>
-    <button class="btn">⬇️ Download Resume</button>
-  </a>
-</header>
-
-<section id="login">
-  <h2>Admin Login</h2>
-  <input type="password" id="adminPass" placeholder="Admin Password">
-  <button class="btn" id="loginBtn">Login</button>
-</section>
-
-<section id="admin">
- <button class="btn" id="logoutBtn" style="background:#ff6b6b;">
-    Logout
-  </button>
-
-  <h2>Create Post</h2>
-  <textarea id="postText" placeholder="Write post..."></textarea>
-  <label><input type="checkbox" id="privatePost"> Private</label><br><br>
-  <button class="btn" id="publishBtn">Publish</button>
-</section>
-
-<section>
-  <h2>My Posts</h2>
-  <div id="posts"></div>
-</section>
-
-<section>
-  <h2>Contact Me</h2>
-
-  <!-- Redirect stop -->
-  <iframe name="hidden_iframe" style="display:none;"></iframe>
-
-  <form action="https://formspree.io/f/xzdzoyyk"
-        method="POST"
-        target="hidden_iframe"
-        onsubmit="showThankYou()">
-    <input type="text" name="name" required placeholder="Your Name">
-    <input type="email" name="email" required placeholder="Your Email">
-    <textarea name="message" required placeholder="Your Message"></textarea>
-    <button class="btn" type="submit">Send Message</button>
-  </form>
-
-  <p id="successMsg" style="display:none;color:#2ecc71;margin-top:10px">
-    ✅ Thank you! Message sent successfully.
-  </p>
-
-</section>
-
 <script>
-const PASSWORD="raj123";
-const adminBtn=document.getElementById("adminBtn");
-const loginBox=document.getElementById("login");
-const loginBtn=document.getElementById("loginBtn");
-const adminBox=document.getElementById("admin");
-const postText=document.getElementById("postText");
-const publishBtn=document.getElementById("publishBtn");
-const privatePost=document.getElementById("privatePost");
-const postsDiv=document.getElementById("posts");
+/* ========= CONFIG ========= */
+const PASSWORD = "raj123";
 
-let isAdmin=false;
-let posts=JSON.parse(localStorage.getItem("posts"))||[];
+/* ========= ADMIN ELEMENTS ========= */
+const adminBtn = document.getElementById("adminBtn");
+const loginBox = document.getElementById("login");
+const loginBtn = document.getElementById("loginBtn");
+const adminBox = document.getElementById("admin");
 
-adminBtn.onclick=()=>{
-  loginBox.style.display="block";
-};
+/* ========= POST ELEMENTS ========= */
+const publishBtn = document.getElementById("publishBtn");
+const postInput = document.getElementById("postText");
+const privateCheckbox = document.getElementById("privatePost");
+const postsDiv = document.getElementById("posts");
 
-loginBtn.onclick=()=>{
-  if(document.getElementById("adminPass").value===PASSWORD){
-    isAdmin=true;
- localStorage.setItem("isAdmin", "true"); 
+/* ========= STATE ========= */
+let isAdmin = false;
+let posts = JSON.parse(localStorage.getItem("posts")) || [];
 
-    loginBox.style.display="none";
-    adminBox.style.display="block";
+/* ========= ADMIN LOGIN ========= */
+adminBtn.addEventListener("click", () => {
+  loginBox.style.display = "block";
+  loginBox.scrollIntoView({ behavior: "smooth" });
+});
+
+loginBtn.addEventListener("click", () => {
+  const pass = document.getElementById("adminPass").value;
+
+  if (pass === PASSWORD) {
+    isAdmin = true;
+    loginBox.style.display = "none";
+    adminBox.style.display = "block";
+    adminBox.scrollIntoView({ behavior: "smooth" });
+    alert("✅ Admin Login Successful");
     renderPosts();
-    alert("Admin Login Successful");
-  }else{
-    alert("Wrong password");
+  } else {
+    alert("❌ Wrong Password");
   }
-};
+});
 
-publishBtn.onclick=()=>{
-  if(!postText.value.trim())return;
-  posts.unshift({text:postText.value,private:privatePost.checked});
-  localStorage.setItem("posts",JSON.stringify(posts));
-  postText.value="";
-  privatePost.checked=false;
+/* ========= ADD POST ========= */
+publishBtn.addEventListener("click", () => {
+  const text = postInput.value.trim();
+  if (!text) return;
+
+  posts.unshift({
+    text,
+    private: privateCheckbox.checked
+  });
+
+  localStorage.setItem("posts", JSON.stringify(posts));
+  postInput.value = "";
+  privateCheckbox.checked = false;
   renderPosts();
-};
+});
 
-function renderPosts(){
-  postsDiv.innerHTML="";
-  posts.forEach((p,i)=>{
-    if(p.private && !isAdmin)return;
-    const d=document.createElement("div");
-    d.className="post";
-    d.innerHTML=`<p>${p.text}</p>`+
-    (isAdmin?`<button onclick="editPost(${i})">Edit</button>
-    <button onclick="deletePost(${i})">Delete</button>`:"");
-    postsDiv.appendChild(d);
+/* ========= RENDER POSTS ========= */
+function renderPosts() {
+  postsDiv.innerHTML = "";
+
+  posts.forEach((post, index) => {
+    if (post.private && !isAdmin) return;
+
+    const div = document.createElement("div");
+    div.className = "post";
+
+    div.innerHTML = `
+      <p>${post.text}</p>
+      ${
+        isAdmin
+          ? `<button onclick="editPost(${index})">✏️ Edit</button>
+             <button onclick="deletePost(${index})">🗑️ Delete</button>`
+          : ""
+      }
+    `;
+
+    postsDiv.appendChild(div);
   });
 }
 
-function deletePost(i){
-  posts.splice(i,1);
-  localStorage.setItem("posts",JSON.stringify(posts));
+/* ========= DELETE ========= */
+function deletePost(index) {
+  if (!confirm("Delete this post?")) return;
+  posts.splice(index, 1);
+  localStorage.setItem("posts", JSON.stringify(posts));
   renderPosts();
 }
-function editPost(i){
-  const t=prompt("Edit post",posts[i].text);
-  if(t){
-    posts[i].text=t;
-    localStorage.setItem("posts",JSON.stringify(posts));
-    renderPosts();
-  }
+
+/* ========= EDIT ========= */
+function editPost(index) {
+  const newText = prompt("Edit post:", posts[index].text);
+  if (!newText) return;
+
+  posts[index].text = newText;
+  localStorage.setItem("posts", JSON.stringify(posts));
+  renderPosts();
 }
+
+/* ========= INITIAL LOAD ========= */
 renderPosts();
 
-function showThankYou(){
-  const m=document.getElementById("successMsg");
-  m.style.display="block";
-  setTimeout(()=>m.style.display="none",5000);
-}
+/* ========= CONTACT FORM (NO REDIRECT) ========= */
+const form = document.getElementById("contactForm");
+const successMsg = document.getElementById("successMsg");
 
-// ===== LOGOUT BUTTON =====
-const logoutBtn = document.getElementById("logoutBtn");
+form.addEventListener("submit", async (e) => {
+  e.preventDefault(); // ❌ stop redirect
 
-logoutBtn.onclick = () => {
-  isAdmin = false;
+  try {
+    const formData = new FormData(form);
 
-  // admin panel hide
-  adminBox.style.display = "none";
-  loginBox.style.display = "none";
+    const res = await fetch(form.action, {
+      method: "POST",
+      body: formData,
+      headers: { Accept: "application/json" }
+    });
 
-  // login state clear
-  localStorage.removeItem("isAdmin");
+    if (res.ok) {
+      form.reset();
+      successMsg.style.display = "block";
 
-  // posts refresh (public view)
-  renderPosts();
-
-  alert("✅ Logged out successfully");
-
-if (localStorage.getItem("isAdmin") === "true") {
-  isAdmin = true;
-  adminBox.style.display = "block";
-}
-
+      // ⏱️ 5 sec পরে hide
+      setTimeout(() => {
+        successMsg.style.display = "none";
+      }, 5000);
+    } else {
+      alert("❌ Submission failed");
+    }
+  } catch (err) {
+    alert("❌ Network error");
+  }
+});
 </script>
-
-</body>
-</html>
