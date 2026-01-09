@@ -106,10 +106,12 @@ textarea{min-height:100px}
 <section id="admin">
   <h2>Create Post</h2>
   <textarea id="postText" placeholder="Write post..."></textarea>
+<input type="file" id="postImage" accept="image/*">
 
   <label>
     <input type="checkbox" id="privatePost"> Private (Admin only)
   </label><br><br>
+
 
   <button class="btn" id="publishBtn">Publish</button>
 
@@ -158,6 +160,8 @@ const adminBox = document.getElementById("admin");
 
 const postInput = document.getElementById("postText");
 const publishBtn = document.getElementById("publishBtn");
+const postImageInput = document.getElementById("postImage");
+
 const privateCheckbox = document.getElementById("privatePost");
 const postsDiv = document.getElementById("posts");
 
@@ -188,37 +192,58 @@ loginBtn.onclick = () => {
 
 /* ADD POST */
 publishBtn.onclick = () => {
-  if(!postInput.value.trim()) return;
+  if (!postInput.value.trim()) return;
 
+  const file = postImageInput.files[0];
+
+  // যদি image থাকে
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      savePost(reader.result);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    // image ছাড়া post
+    savePost(null);
+  }
+};
+
+function savePost(imageData) {
   posts.unshift({
     text: postInput.value,
     private: privateCheckbox.checked,
-    time: new Date().toLocaleString() // 🕒 date & time
+    time: new Date().toLocaleString(),
+    image: imageData
   });
 
   localStorage.setItem("posts", JSON.stringify(posts));
-  postInput.value="";
-  privateCheckbox.checked=false;
+
+  postInput.value = "";
+  postImageInput.value = "";
+  privateCheckbox.checked = false;
+
   renderPosts();
-};
+}
+
 
 /* RENDER POSTS */
 function renderPosts(){
-  postsDiv.innerHTML += `
+ postsDiv.innerHTML += `
   <div class="post">
-    <small style="opacity:0.7;">
-      🕒 ${p.time || "—"}
-    </small>
+    <small style="opacity:0.7;">🕒 ${p.time || ""}</small>
+
+    ${p.image ? `<img src="${p.image}" style="width:100%;margin:10px 0;border-radius:8px;">` : ""}
+
     <p>${p.text}</p>
+
     ${isAdmin ? `
       <button onclick="editPost(${i})">Edit</button>
       <button onclick="deletePost(${i})">Delete</button>
     ` : ""}
-  </div>`;
-
-  });
+  </div>
+`;
 }
-
 function deletePost(i){
   if(confirm("Delete post?")){
     posts.splice(i,1);
@@ -255,6 +280,7 @@ form.addEventListener("submit", async e=>{
     form.reset();
     successMsg.style.display="block";
     setTimeout(()=>successMsg.style.display="none",5000);
+
   }else{
     alert("Submission failed");
   }
