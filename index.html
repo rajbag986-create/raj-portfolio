@@ -196,7 +196,6 @@ publishBtn.onclick = () => {
 
   const file = postImageInput.files[0];
 
-  // যদি image থাকে
   if (file) {
     const reader = new FileReader();
     reader.onload = () => {
@@ -204,7 +203,6 @@ publishBtn.onclick = () => {
     };
     reader.readAsDataURL(file);
   } else {
-    // image ছাড়া post
     savePost(null);
   }
 };
@@ -228,22 +226,35 @@ function savePost(imageData) {
 
 
 /* RENDER POSTS */
-function renderPosts(){
- postsDiv.innerHTML += `
-  <div class="post">
-    <small style="opacity:0.7;">🕒 ${p.time || ""}</small>
+function renderPosts() {
+  postsDiv.innerHTML = "";
 
-    ${p.image ? `<img src="${p.image}" style="width:100%;margin:10px 0;border-radius:8px;">` : ""}
+  posts.forEach((p, i) => {
+    if (p.private && !isAdmin) return;
 
-    <p>${p.text}</p>
+    const div = document.createElement("div");
+    div.className = "post";
 
-    ${isAdmin ? `
-      <button onclick="editPost(${i})">Edit</button>
-      <button onclick="deletePost(${i})">Delete</button>
-    ` : ""}
-  </div>
-`;
+    div.innerHTML = `
+      <small style="opacity:0.7;">🕒 ${p.time || ""}</small>
+
+      ${p.image ? `
+        <img src="${p.image}"
+             style="width:100%;margin:10px 0;border-radius:8px;">
+      ` : ""}
+
+      <p>${p.text}</p>
+
+      ${isAdmin ? `
+        <button onclick="editPost(${i})">Edit</button>
+        <button onclick="deletePost(${i})">Delete</button>
+      ` : ""}
+    `;
+
+    postsDiv.appendChild(div);
+  });
 }
+
 function deletePost(i){
   if(confirm("Delete post?")){
     posts.splice(i,1);
