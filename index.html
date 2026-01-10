@@ -125,6 +125,10 @@ textarea{min-height:100px}
 <button class="btn" id="changePassBtn">
   Change Password
 </button>
+<br><br>
+<button class="btn" id="logoutBtn" style="background:#ff4d4d;">
+  🚪 Logout
+</button>
 
 </section>
 
@@ -157,6 +161,7 @@ const adminBtn = document.getElementById("adminBtn");
 const loginBox = document.getElementById("login");
 const loginBtn = document.getElementById("loginBtn");
 const adminBox = document.getElementById("admin");
+const logoutBtn = document.getElementById("logoutBtn");
 
 const postInput = document.getElementById("postText");
 const publishBtn = document.getElementById("publishBtn");
@@ -328,6 +333,16 @@ changePassBtn.onclick = () => {
 
   document.getElementById("oldPass").value = "";
   document.getElementById("newPass").value = "";
+};
+
+logoutBtn.onclick = () => {
+  isAdmin = false;
+
+  adminBox.style.display = "none";
+  loginBox.style.display = "none";
+
+  alert("🚪 Logged out successfully");
+  renderPosts();
 };
 
 </script>
