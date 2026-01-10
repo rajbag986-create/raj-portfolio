@@ -3,7 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Raj Bag | Portfolio</title>
+<title>
+Raj Bag | Portfolio
+<meta name="description" content="Raj Bag – Data Entry, Data Analytics, Excel Expert portfolio. Admin posts, contact form, and modern UI.">
+<meta name="keywords" content="Raj Bag, Data Entry, Data Analytics, Excel Expert, Portfolio">
+<meta name="author" content="Raj Bag">
+
+<!-- Open Graph (Facebook / LinkedIn) -->
+<meta property="og:title" content="Raj Bag | Portfolio">
+<meta property="og:description" content="Data Entry • Data Analytics • Excel Expert">
+<meta property="og:type" content="website">
+<meta property="og:url" content=“https://rajbag986-create.github.io/raj-portfolio/
+<meta property="og:image" content="https://rajbag986-create.github.io/raj-portfolio/og-image.png">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Raj Bag | Portfolio">
+<meta name="twitter:description" content="Data Entry • Data Analytics • Excel Expert">
+<meta name="twitter:image" content="https://YOUR_USERNAME.github.io/raj-portfolio/og-image.png">
+
+
+</title>
 
 <style>
 *{
@@ -293,6 +313,14 @@ textarea::placeholder{
     max-width: 100%;
     height: auto;
   }
+}
+/* Performance hints */
+*{
+  -webkit-tap-highlight-color: transparent;
+}
+
+img{
+  loading: lazy;
 }
 
 </style>
@@ -591,6 +619,14 @@ const revealOnScroll = () => {
 
 window.addEventListener('scroll', revealOnScroll);
 window.addEventListener('load', revealOnScroll);
+
+// Prevent double-click issues on buttons
+document.querySelectorAll('.btn').forEach(b=>{
+  b.addEventListener('click',()=> {
+    b.disabled = true;
+    setTimeout(()=>b.disabled=false, 300);
+  });
+});
 
 </script>
 
