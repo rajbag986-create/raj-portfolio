@@ -33,14 +33,19 @@ header h1{
   padding:12px 22px;
   margin:8px;
   border:none;
-  border-radius:8px;
-  background:#2ecc71;
+  border-radius:10px;
+  background:linear-gradient(135deg,#2ecc71,#27ae60);
   color:#000;
   font-weight:bold;
   cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease, opacity .15s;
 }
 
-.btn:hover{opacity:0.85}
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 15px rgba(0,0,0,0.4);
+  opacity:0.95;
+}
 
 /* SECTION */
 section{
@@ -66,11 +71,12 @@ textarea{min-height:100px}
 
 /* POSTS */
 .post{
-  background:#111c4d;
-  padding:15px;
-  border-radius:8px;
-  margin-bottom:12px;
+  background:linear-gradient(180deg,#111c4d,#0b1437);
+  padding:16px;
+  border-radius:12px;
+  margin-bottom:16px;
   text-align:left;
+  box-shadow:0 10px 25px rgba(0,0,0,0.45);
 }
 
 /* SUCCESS MSG */
@@ -359,6 +365,21 @@ if (localStorage.getItem("isAdmin") === "yes") {
   isAdmin = true;
   adminBox.style.display = "block";
   renderPosts();
+}
+
+/* ===== ADMIN POLISH ===== */
+#admin {
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+#admin h2, #admin h3 {
+  color: #2ecc71;
+  margin-bottom: 10px;
+}
+
+#admin textarea {
+  resize: vertical;
 }
 
 </script>
