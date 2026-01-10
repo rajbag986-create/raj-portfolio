@@ -424,6 +424,38 @@ img{
   background: rgba(46,204,113,0.25);
 }
 
+/* ===== PROJECT IMAGES + LINKS ===== */
+.project-card img{
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  object-fit: cover;
+}
+
+.project-links{
+  margin: 10px 0;
+}
+
+.project-links a{
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  background: rgba(46,204,113,0.15);
+  color: #2ecc71;
+  border: 1px solid rgba(46,204,113,0.35);
+  transition: all .2s ease;
+}
+
+.project-links a:hover{
+  background: rgba(46,204,113,0.3);
+  transform: translateY(-2px);
+}
+
 </style>
 </head>
 
@@ -486,37 +518,57 @@ img{
 </section>
 
 <!-- PROJECTS -->
+
 <section class="reveal">
   <h2>Projects</h2>
 
   <div class="project-list">
 
     <div class="project-card">
+      <img src="images/excel-dashboard.png" alt="Excel Dashboard Project">
       <h3>📊 Excel Sales Dashboard</h3>
       <p>
-        Created an interactive Excel dashboard using formulas, charts,
-        and data cleaning to analyze monthly sales performance.
+        Interactive Excel dashboard using formulas, charts,
+        and cleaned datasets to analyze monthly sales.
       </p>
+      <div class="project-links">
+        <a href="#" target="_blank">Live Demo</a>
+        <a href="#" target="_blank">Details</a>
+      </div>
       <span class="tech">MS Excel • Data Analysis</span>
     </div>
 
     <div class="project-card">
+      <img src="images/data-entry.png" alt="Data Entry Project">
       <h3>🧾 Data Entry Automation</h3>
       <p>
-        Automated large data entry tasks using structured templates,
-        improving accuracy and reducing manual errors.
+        Structured templates and workflows to improve
+        data entry accuracy and speed.
       </p>
-      <span class="tech">Data Entry • Accuracy • Speed</span>
+      <div class="project-links">
+        <a href="#" target="_blank">Case Study</a>
+      </div>
+      <span class="tech">Data Entry • Accuracy</span>
     </div>
 
     <div class="project-card">
+      <img src="images/portfolio-site.png" alt="Portfolio Website">
       <h3>🤖 AI Portfolio Website</h3>
       <p>
-        Designed and developed a personal portfolio website with admin panel,
-        posts, image upload, and contact form.
+        Personal portfolio with admin panel, posts,
+        image upload, and contact form.
       </p>
-      <span class="tech">HTML • CSS • JavaScript • AI Tools</span>
+      <div class="project-links">
+        <a href="https://rajbag986.github.io/raj-portfolio/"
+           target="_blank">Live Site</a>
+        <a href="https://github.com/rajbag986/raj-portfolio"
+           target="_blank">GitHub</a>
+      </div>
+      <span class="tech">HTML • CSS • JavaScript</span>
     </div>
+
+  </div>
+</section>
 
 <!-- SKILLS -->
 <section class="reveal">
