@@ -186,6 +186,8 @@ loginBtn.onclick = () => {
 ) {
 
     isAdmin = true;
+    localStorage.setItem("isAdmin","yes");
+
     loginBox.style.display="none";
     adminBox.style.display="block";
     renderPosts();
@@ -337,6 +339,7 @@ changePassBtn.onclick = () => {
 
 logoutBtn.onclick = () => {
   isAdmin = false;
+  localStorage.removeItem("isAdmin");
 
   adminBox.style.display = "none";
   loginBox.style.display = "none";
@@ -344,6 +347,14 @@ logoutBtn.onclick = () => {
   alert("🚪 Logged out successfully");
   renderPosts();
 };
+
+
+// ===== AUTO LOGIN CHECK =====
+if (localStorage.getItem("isAdmin") === "yes") {
+  isAdmin = true;
+  adminBox.style.display = "block";
+  renderPosts();
+}
 
 </script>
 
