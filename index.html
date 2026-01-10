@@ -126,7 +126,9 @@ textarea{min-height:100px}
   Change Password
 </button>
 <br><br>
-<button class="btn" id="logoutBtn" style="background:#ff4d4d;">
+
+<button class="btn" id="logoutBtn"
+        style="background:#ff4d4d; display:none;">
   🚪 Logout
 </button>
 
@@ -190,6 +192,8 @@ loginBtn.onclick = () => {
 
     loginBox.style.display="none";
     adminBox.style.display="block";
+   logoutBtn.style.display = "inline-block";
+
     renderPosts();
     alert("Admin Login Successful");
   }else{
@@ -343,8 +347,9 @@ logoutBtn.onclick = () => {
 
   adminBox.style.display = "none";
   loginBox.style.display = "none";
-
-  alert("🚪 Logged out successfully");
+ logoutBtn.style.display = "none"; 
+ 
+ alert("🚪 Logged out successfully");
   renderPosts();
 };
 
