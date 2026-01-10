@@ -149,6 +149,45 @@ section:hover{
   background: linear-gradient(180deg,#0b1437,#0f1c4f);
 }
 
+/* ===== CARD GLOW ANIMATION ===== */
+section, .post {
+  position: relative;
+  overflow: hidden;
+}
+
+section::after, .post::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(46, 204, 113, 0.25),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+section:hover::after,
+.post:hover::after {
+  opacity: 1;
+}
+
+/* subtle pulsing glow */
+@keyframes softGlow {
+  0%   { box-shadow: 0 0 0 rgba(46,204,113,0.0); }
+  50%  { box-shadow: 0 0 25px rgba(46,204,113,0.35); }
+  100% { box-shadow: 0 0 0 rgba(46,204,113,0.0); }
+}
+
+section:hover,
+.post:hover {
+  animation: softGlow 1.8s ease-in-out infinite;
+}
+
 </style>
 </head>
 
