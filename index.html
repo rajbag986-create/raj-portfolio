@@ -201,6 +201,47 @@ section:hover,
   transform: translateY(0);
 }
 
+/* ===== GLASSMORPHISM UPGRADE ===== */
+
+/* Glass effect for sections */
+section{
+  background: rgba(15, 28, 79, 0.55);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* Glass effect for posts */
+.post{
+  background: rgba(17, 28, 77, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* Header glass touch */
+header{
+  background: linear-gradient(
+    180deg,
+    rgba(5,11,30,0.85),
+    rgba(5,11,30,0.4)
+  );
+  backdrop-filter: blur(10px);
+}
+
+/* Inputs glass style */
+input, textarea{
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+input::placeholder,
+textarea::placeholder{
+  color: rgba(255,255,255,0.65);
+}
+
 </style>
 </head>
 
