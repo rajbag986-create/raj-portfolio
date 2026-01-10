@@ -464,6 +464,14 @@ img{
   opacity: 0.95;
 }
 
+/* ===== BACKGROUND STYLE ===== */
+body{
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  transition: background-image .6s ease;
+}
+
 </style>
 </head>
 
@@ -515,6 +523,16 @@ img{
 <button class="btn" id="logoutBtn"
         style="background:#ff4d4d; display:none;">
   🚪 Logout
+</button>
+
+<hr style="margin:30px 0;">
+
+<h3>Change Website Background</h3>
+
+<input type="file" id="bgInput" accept="image/*">
+
+<button class="btn" id="saveBgBtn">
+  Save Background
 </button>
 
 </section>
@@ -672,6 +690,8 @@ const logoutBtn = document.getElementById("logoutBtn");
 const postInput = document.getElementById("postText");
 const publishBtn = document.getElementById("publishBtn");
 const postImageInput = document.getElementById("postImage");
+const bgInput = document.getElementById("bgInput");
+const saveBgBtn = document.getElementById("saveBgBtn");
 
 const privateCheckbox = document.getElementById("privatePost");
 const postsDiv = document.getElementById("posts");
@@ -887,6 +907,30 @@ document.querySelectorAll('.btn').forEach(b=>{
     setTimeout(()=>b.disabled=false, 300);
   });
 });
+// ===== BACKGROUND CHANGE SYSTEM =====
+
+// Load saved background on page load
+const savedBg = localStorage.getItem("siteBackground");
+if (savedBg) {
+  document.body.style.backgroundImage = `url(${savedBg})`;
+}
+
+// Save new background
+saveBgBtn.onclick = () => {
+  const file = bgInput.files[0];
+  if (!file) {
+    alert("Please select an image");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    document.body.style.backgroundImage = `url(${reader.result})`;
+    localStorage.setItem("siteBackground", reader.result);
+    alert("✅ Background saved successfully");
+  };
+  reader.readAsDataURL(file);
+};
 
 </script>
 
