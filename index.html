@@ -188,6 +188,19 @@ section:hover,
   animation: softGlow 1.8s ease-in-out infinite;
 }
 
+/* ===== SCROLL REVEAL ===== */
+.reveal{
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity .8s ease, transform .8s ease;
+  will-change: opacity, transform;
+}
+
+.reveal.active{
+  opacity: 1;
+  transform: translateY(0);
+}
+
 </style>
 </head>
 
@@ -212,7 +225,7 @@ section:hover,
 </section>
 
 <!-- ADMIN PANEL -->
-<section id="admin">
+<section id="admin" class="reveal">
   <h2>Create Post</h2>
   <textarea id="postText" placeholder="Write post..."></textarea>
 <input type="file" id="postImage" accept="image/*">
@@ -244,13 +257,13 @@ section:hover,
 </section>
 
 <!-- POSTS -->
-<section>
+<section class="reveal">
   <h2>My Posts</h2>
   <div id="posts"></div>
 </section>
 
 <!-- CONTACT -->
-<section>
+<section class="reveal">
   <h2>Contact Me</h2>
 
   <form id="contactForm" method="POST" action="https://formspree.io/f/xzdzoyyk">
@@ -468,6 +481,22 @@ if (localStorage.getItem("isAdmin") === "yes") {
   adminBox.style.display = "block";
   renderPosts();
 }
+
+// ===== SCROLL REVEAL LOGIC =====
+const reveals = document.querySelectorAll('.reveal');
+
+const revealOnScroll = () => {
+  const windowHeight = window.innerHeight;
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if (top < windowHeight - 80) {
+      el.classList.add('active');
+    }
+  });
+};
+
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('load', revealOnScroll);
 
 </script>
 
