@@ -33,10 +33,18 @@ Raj Bag | Portfolio
 
 body{
   margin:0;
-  background:#050b1e;
+  min-height:100vh;
+  background:
+    linear-gradient(
+      180deg,
+      #050b1e 0%,
+      #060d25 40%,
+      #050b1e 100%
+    );
   color:#fff;
   text-align:center;
 }
+
 
 /* HEADER */
 header{
@@ -73,7 +81,7 @@ section{
 
 header, section {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* ADMIN */
@@ -496,6 +504,11 @@ body{
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+}
+
+header, section {
+  position: relative;
+  z-index: 2;
 }
 
 </style>
