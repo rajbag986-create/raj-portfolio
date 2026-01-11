@@ -33,18 +33,10 @@ Raj Bag | Portfolio
 
 body{
   margin:0;
-  min-height:100vh;
-  background:
-    linear-gradient(
-      180deg,
-      #050b1e 0%,
-      #060d25 40%,
-      #050b1e 100%
-    );
+  background:#050b1e;
   color:#fff;
   text-align:center;
 }
-
 
 /* HEADER */
 header{
@@ -77,11 +69,6 @@ section{
   padding:20px;
   background:#0b1437;
   border-radius:12px;
-}
-
-header, section {
-  position: relative;
-  z-index: 2;
 }
 
 /* ADMIN */
@@ -483,32 +470,6 @@ body{
   background-position: center;
   background-attachment: fixed;
   transition: background-image .6s ease;
-}
-
-/* ===== GRADIENT + IMAGE BACKGROUND ===== */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(5,11,30,0.85),
-      rgba(15,28,79,0.75)
-    );
-  z-index:-1;
-  pointer-events:none;
-}
-
-body{
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-}
-
-header, section {
-  position: relative;
-  z-index: 2;
 }
 
 </style>
@@ -951,13 +912,7 @@ document.querySelectorAll('.btn').forEach(b=>{
 // Load saved background on page load
 const savedBg = localStorage.getItem("siteBackground");
 if (savedBg) {
- if (savedBg) {
-  document.body.style.backgroundImage =
-    `linear-gradient(
-       135deg,
-       rgba(5,11,30,0.6),
-       rgba(15,28,79,0.6)
-     ), url(${savedBg})`;
+  document.body.style.backgroundImage = `url(${savedBg})`;
 }
 
 // Save new background
@@ -970,13 +925,7 @@ saveBgBtn.onclick = () => {
 
   const reader = new FileReader();
   reader.onload = () => {
-    document.body.style.backgroundImage =
-  `linear-gradient(
-     135deg,
-     rgba(5,11,30,0.6),
-     rgba(15,28,79,0.6)
-   ), url(${reader.result})`;
-
+    document.body.style.backgroundImage = `url(${reader.result})`;
     localStorage.setItem("siteBackground", reader.result);
     alert("✅ Background saved successfully");
   };
