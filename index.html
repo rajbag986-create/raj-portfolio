@@ -471,6 +471,34 @@ body{
   background-attachment: fixed;
   transition: background-image .6s ease;
 }
+.project-card{
+  background:#111c4d;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+  text-align:left;
+  transition:0.3s;
+}
+
+.project-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 30px rgba(46,204,113,0.2);
+}
+
+.project-card h3{
+  margin-top:0;
+}
+
+.tag{
+  display:inline-block;
+  margin-top:8px;
+  margin-right:6px;
+  padding:4px 10px;
+  border-radius:20px;
+  background:#2ecc71;
+  color:#000;
+  font-size:12px;
+}
 
 </style>
 </head>
@@ -547,6 +575,32 @@ body{
 
 <section class="reveal">
   <h2>Projects</h2>
+
+<!-- PROJECTS -->
+<section>
+  <h2>Projects</h2>
+
+  <div class="project-card">
+    <h3>📊 Excel Sales Dashboard</h3>
+    <p>
+      Created an interactive Excel dashboard using Pivot Tables,
+      Charts, and Data Cleaning techniques.
+    </p>
+    <span class="tag">Excel</span>
+    <span class="tag">Dashboard</span>
+  </div>
+
+  <div class="project-card">
+    <h3>📈 Data Analysis Report</h3>
+    <p>
+      Analyzed raw data, cleaned inconsistencies,
+      and generated insights for decision making.
+    </p>
+    <span class="tag">Data Analytics</span>
+    <span class="tag">Reporting</span>
+  </div>
+
+</section>
 
   <div class="project-list">
 
