@@ -549,90 +549,6 @@ body > section {
   transform: translateY(0);
 }
 
-/* FLOATING ACTION BUTTON */
-.fab-container{
-  position:fixed;
-  bottom:25px;
-  right:25px;
-  z-index:9999;
-}
-
-.fab-btn{
-  width:56px;
-  height:56px;
-  border-radius:50%;
-  border:none;
-  background:#2ecc71;
-  font-size:22px;
-  cursor:pointer;
-  box-shadow:0 10px 25px rgba(0,0,0,.4);
-}
-
-.fab-menu{
-  display:none;
-  flex-direction:column;
-  margin-bottom:12px;
-}
-
-.fab-menu button{
-  margin:6px 0;
-  padding:10px 14px;
-  border-radius:10px;
-  border:none;
-  background:#0b1437;
-  color:#fff;
-  cursor:pointer;
-  box-shadow:0 6px 15px rgba(0,0,0,.3);
-}
-
-.fab-menu button:hover{
-  background:#2ecc71;
-  color:#000;
-}
-
-/* ==== CLICK FIX ==== */
-body::before,
-body::after{
-  pointer-events: none;
-}
-
-/* Ensure main content is clickable */
-header,
-section,
-button,
-input,
-textarea,
-.fab-container{
-  position: relative;
-  z-index: 5;
-}
-
-/* Floating menu always on top */
-.fab-container{
-  z-index: 99999;
-}
-/* === FORCE CLICK FIX === */
-* {
-  pointer-events: auto !important;
-}
-
-body::before,
-body::after {
-  display: none !important;
-}
-
-header,
-section,
-button,
-input,
-textarea,
-a,
-img,
-.fab-container {
-  position: relative !important;
-  z-index: 9999 !important;
-}
-
 </style>
 </head>
 
@@ -1200,7 +1116,6 @@ const skillObserver = new IntersectionObserver(entries => {
 },{ threshold:0.4 });
 
 skills.forEach(skill => skillObserver.observe(skill));
-
 // ===== SCROLL REVEAL SCRIPT =====
 const reveals = document.querySelectorAll(".reveal");
 
@@ -1219,38 +1134,6 @@ function revealOnScroll() {
 window.addEventListener("scroll", revealOnScroll);
 revealOnScroll();
 
-/* FLOATING MENU LOGIC */
-const fabToggle = document.getElementById("fabToggle");
-const fabMenu = document.getElementById("fabMenu");
-
-fabToggle.onclick = () => {
-  fabMenu.style.display =
-    fabMenu.style.display === "flex" ? "none" : "flex";
-};
-
-/* MENU ACTIONS */
-function openAdminLogin(){
-  loginBox.style.display = "block";
-  loginBox.scrollIntoView({behavior:"smooth"});
-  fabMenu.style.display = "none";
-}
-
-function scrollToChangePassword(){
-  document.getElementById("changePassBtn")
-    .scrollIntoView({behavior:"smooth"});
-  fabMenu.style.display = "none";
-}
-
-/* BACKGROUND TOGGLE */
-let bgState = false;
-function toggleBackground(){
-  document.body.style.background = bgState
-    ? "#050b1e"
-    : "linear-gradient(135deg,#020024,#090979,#00d4ff)";
-  bgState = !bgState;
-  fabMenu.style.display = "none";
-}
-
 </script>
 
 <footer style="
@@ -1266,17 +1149,6 @@ function toggleBackground(){
     LinkedIn
   </a>
 </footer>
-
-<!-- FLOATING ADMIN MENU -->
-<div class="fab-container">
-  <button class="fab-btn" id="fabToggle">⚙️</button>
-
-  <div class="fab-menu" id="fabMenu">
-    <button onclick="openAdminLogin()">🔐 Admin Login</button>
-    <button onclick="scrollToChangePassword()">🔑 Change Password</button>
-    <button onclick="toggleBackground()">🎨 Change Background</button>
-  </div>
-</div>
 
 </body>
 </html>
