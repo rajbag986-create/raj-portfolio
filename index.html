@@ -537,6 +537,18 @@ body > section {
   display: block;
 }
 
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 </style>
 </head>
 
@@ -1104,6 +1116,24 @@ const skillObserver = new IntersectionObserver(entries => {
 },{ threshold:0.4 });
 
 skills.forEach(skill => skillObserver.observe(skill));
+
+// ===== SCROLL REVEAL SCRIPT =====
+const reveals = document.querySelectorAll(".reveal");
+
+function revealOnScroll() {
+  reveals.forEach(el => {
+    const windowHeight = window.innerHeight;
+    const elementTop = el.getBoundingClientRect().top;
+    const visiblePoint = 100;
+
+    if (elementTop < windowHeight - visiblePoint) {
+      el.classList.add("active");
+    }
+  });
+}
+
+window.addEventListener("scroll", revealOnScroll);
+revealOnScroll();
 
 </script>
 
