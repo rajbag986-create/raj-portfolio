@@ -611,6 +611,27 @@ textarea,
 .fab-container{
   z-index: 99999;
 }
+/* === FORCE CLICK FIX === */
+* {
+  pointer-events: auto !important;
+}
+
+body::before,
+body::after {
+  display: none !important;
+}
+
+header,
+section,
+button,
+input,
+textarea,
+a,
+img,
+.fab-container {
+  position: relative !important;
+  z-index: 9999 !important;
+}
 
 </style>
 </head>
