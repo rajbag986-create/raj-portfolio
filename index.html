@@ -590,6 +590,28 @@ body > section {
   color:#000;
 }
 
+/* ==== CLICK FIX ==== */
+body::before,
+body::after{
+  pointer-events: none;
+}
+
+/* Ensure main content is clickable */
+header,
+section,
+button,
+input,
+textarea,
+.fab-container{
+  position: relative;
+  z-index: 5;
+}
+
+/* Floating menu always on top */
+.fab-container{
+  z-index: 99999;
+}
+
 </style>
 </head>
 
