@@ -229,6 +229,28 @@
   display:none;
 }
 
+.btn,
+button {
+  position: relative;
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+
+header,
+section {
+  position: relative;
+  z-index: 100;
+}
+
+/* FORCE CLICK FIX */
+button,
+.btn {
+  position: relative !important;
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+}
+
   </style>
 </head>
 
