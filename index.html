@@ -93,6 +93,17 @@ input,textarea{
 
 <section id="admin">
   <h2>Admin Panel</h2>
+
+<section id="posts">
+  <h2>My Posts</h2>
+  <div id="postList"></div>
+</section>
+
+<!-- ADD POST -->
+<textarea id="postText" placeholder="Write a new post..."></textarea>
+<button class="btn" id="addPostBtn">Add Post</button>
+<hr style="margin:20px 0;">
+
   <p>Welcome Admin ✅</p>
   <button class="btn" id="logoutBtn">Logout</button>
 </section>
@@ -115,6 +126,7 @@ loginBtn.onclick = () => {
   if(pass === PASSWORD){
     loginBox.style.display = "none";
     adminBox.style.display = "block";
+    renderPosts(true);
     alert("Admin Login Successful");
   }else{
     alert("Wrong Password");
@@ -124,6 +136,52 @@ loginBtn.onclick = () => {
 logoutBtn.onclick = () => {
   adminBox.style.display = "none";
 };
+
+
+/* ===== POSTS SYSTEM ===== */
+
+const postInput = document.getElementById("postText");
+const addPostBtn = document.getElementById("addPostBtn");
+const postList = document.getElementById("postList");
+
+let posts = JSON.parse(localStorage.getItem("posts")) || [];
+
+function renderPosts(isAdmin=false){
+  postList.innerHTML = "";
+
+  posts.forEach((post, index) => {
+    const div = document.createElement("div");
+    div.className = "post";
+    div.innerHTML = `
+      <p>${post}</p>
+      ${
+        isAdmin
+          ? `<button class="btn" onclick="deletePost(${index})">Delete</button>`
+          : ""
+      }
+    `;
+    postList.appendChild(div);
+  });
+}
+
+function deletePost(index){
+  posts.splice(index,1);
+  localStorage.setItem("posts", JSON.stringify(posts));
+  renderPosts(true);
+}
+
+addPostBtn.onclick = () => {
+  const text = postInput.value.trim();
+  if(!text) return;
+
+  posts.unshift(text);
+  localStorage.setItem("posts", JSON.stringify(posts));
+  postInput.value = "";
+  renderPosts(true);
+};
+
+/* INITIAL LOAD */
+renderPosts();
 </script>
 
 </body>
