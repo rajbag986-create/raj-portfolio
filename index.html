@@ -225,6 +225,10 @@
   width:100%;
 }
 
+#admin{
+  display:none;
+}
+
   </style>
 </head>
 
@@ -344,40 +348,28 @@
 <footer>
   © 2026 Raj Bag · Data Analyst Portfolio
 </footer>
+
 <script>
-const ADMIN_PASSWORD = "raj123"; // চাইলে বদলাবে
+const PASSWORD = "raj123";
 
-const trigger = document.getElementById("adminTrigger");
-const loginBox = document.getElementById("adminLogin");
-const adminPanel = document.getElementById("adminPanel");
+const loginBox = document.getElementById("login");
+const adminBox = document.getElementById("admin");
+const loginBtn = document.getElementById("loginBtn");
 
-// secret click (5 times)
-let clicks = 0;
-trigger.onclick = () => {
-  clicks++;
-  if(clicks === 5){
-    loginBox.style.display = "block";
-    clicks = 0;
-  }
-};
-
-// login
-function loginAdmin(){
+loginBtn.addEventListener("click", () => {
   const pass = document.getElementById("adminPass").value;
-  if(pass === ADMIN_PASSWORD){
-    loginBox.style.display = "none";
-    adminPanel.style.display = "block";
-    alert("Admin Logged In");
-  }else{
-    alert("Wrong Password");
-  }
-}
 
-// logout
-function logoutAdmin(){
-  adminPanel.style.display = "none";
-}
+  if(pass === PASSWORD){
+    loginBox.style.display = "none";
+    adminBox.style.display = "block";
+    alert("✅ Admin Login Successful");
+  } else {
+    alert("❌ Wrong Password");
+  }
+});
 </script>
+
+
 
 </body>
 </html>
