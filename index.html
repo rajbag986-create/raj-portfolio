@@ -156,7 +156,10 @@ function renderPosts(isAdmin=false){
       <p>${post}</p>
       ${
         isAdmin
-          ? `<button class="btn" onclick="deletePost(${index})">Delete</button>`
+          ? `
+            <button class="btn" onclick="editPost(${index})">Edit</button>
+            <button class="btn" onclick="deletePost(${index})">Delete</button>
+          `
           : ""
       }
     `;
@@ -164,10 +167,20 @@ function renderPosts(isAdmin=false){
   });
 }
 
+
 function deletePost(index){
   posts.splice(index,1);
   localStorage.setItem("posts", JSON.stringify(posts));
   renderPosts(true);
+}
+
+function editPost(index){
+  const updated = prompt("Edit post:", posts[index]);
+  if(updated !== null && updated.trim() !== ""){
+    posts[index] = updated;
+    localStorage.setItem("posts", JSON.stringify(posts));
+    renderPosts(true);
+  }
 }
 
 addPostBtn.onclick = () => {
