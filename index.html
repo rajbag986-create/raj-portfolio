@@ -194,6 +194,37 @@
       header h1{font-size:38px}
       h2{font-size:26px}
     }
+
+#adminTrigger{
+  width:120px;
+  height:30px;
+  margin:10px auto;
+  cursor:pointer;
+  opacity:0;
+}
+
+#adminLogin{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:#020617;
+  padding:25px;
+  border-radius:12px;
+  display:none;
+  z-index:9999;
+  box-shadow:0 20px 40px rgba(0,0,0,0.6);
+}
+
+#adminLogin input{
+  width:100%;
+  margin-bottom:12px;
+}
+
+#adminLogin button{
+  width:100%;
+}
+
   </style>
 </head>
 
@@ -208,6 +239,17 @@
     <a href="Raj_Bag_Resume.pdf" download><button class="btn">Download Resume</button></a>
     <a href="https://www.linkedin.com" target="_blank"><button class="btn secondary">LinkedIn</button></a>
   </div>
+
+<!-- SECRET ADMIN TRIGGER -->
+<div id="adminTrigger"></div>
+
+<!-- ADMIN LOGIN -->
+<div id="adminLogin">
+  <h3>Admin Login</h3>
+  <input type="password" id="adminPass" placeholder="Admin Password">
+  <button onclick="loginAdmin()">Login</button>
+</div>
+
 </header>
 
 <!-- ABOUT -->
@@ -292,9 +334,50 @@
   <p id="success">✅ Thank you! Message sent successfully.</p>
 </section>
 
+<!-- ADMIN LOGIN -->
+<div id="adminLogin">
+  <h3>Admin Login</h3>
+  <input type="password" id="adminPass" placeholder="Admin Password">
+  <button onclick="loginAdmin()">Login</button>
+</div>
+
 <footer>
   © 2026 Raj Bag · Data Analyst Portfolio
 </footer>
+<script>
+const ADMIN_PASSWORD = "raj123"; // চাইলে বদলাবে
+
+const trigger = document.getElementById("adminTrigger");
+const loginBox = document.getElementById("adminLogin");
+const adminPanel = document.getElementById("adminPanel");
+
+// secret click (5 times)
+let clicks = 0;
+trigger.onclick = () => {
+  clicks++;
+  if(clicks === 5){
+    loginBox.style.display = "block";
+    clicks = 0;
+  }
+};
+
+// login
+function loginAdmin(){
+  const pass = document.getElementById("adminPass").value;
+  if(pass === ADMIN_PASSWORD){
+    loginBox.style.display = "none";
+    adminPanel.style.display = "block";
+    alert("Admin Logged In");
+  }else{
+    alert("Wrong Password");
+  }
+}
+
+// logout
+function logoutAdmin(){
+  adminPanel.style.display = "none";
+}
+</script>
 
 </body>
 </html>
