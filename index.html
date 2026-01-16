@@ -250,6 +250,31 @@ button,
   z-index: 9999 !important;
   pointer-events: auto !important;
 }
+/* 🔥 CLICK FIX – background disable */
+body * {
+  pointer-events: auto;
+}
+
+body::before,
+body::after {
+  pointer-events: none !important;
+}
+
+/* If any full screen bg div exists */
+.background,
+.bg,
+.overlay {
+  pointer-events: none !important;
+}
+
+/* Force buttons clickable */
+button,
+.btn,
+input {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 99999;
+}
 
   </style>
 </head>
