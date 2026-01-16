@@ -1,422 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Raj Bag | Data Analyst Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raj Bag | Portfolio</title>
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family: "Segoe UI", Arial, sans-serif;
-    }
-
-    body{
-      background: linear-gradient(135deg,#020617,#020b2a);
-      color:#e5e7eb;
-      line-height:1.6;
-    }
-
-    /* ===== COMMON ===== */
-    section{
-      max-width:1000px;
-      margin:60px auto;
-      padding:30px;
-      background:rgba(15,23,42,0.85);
-      border-radius:16px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.4);
-    }
-
-    h2{
-      text-align:center;
-      margin-bottom:30px;
-      color:#22c55e;
-      font-size:32px;
-    }
-
-    /* ===== HERO ===== */
-    header{
-      text-align:center;
-      padding:90px 20px 70px;
-    }
-
-    header h1{
-      font-size:48px;
-      color:#22c55e;
-      margin-bottom:10px;
-    }
-
-    header p{
-      font-size:18px;
-      opacity:0.9;
-      margin-bottom:30px;
-    }
-
-    .hero-buttons{
-      display:flex;
-      justify-content:center;
-      gap:15px;
-      flex-wrap:wrap;
-    }
-
-    .btn{
-      padding:12px 26px;
-      border:none;
-      border-radius:10px;
-      font-size:15px;
-      font-weight:600;
-      cursor:pointer;
-      background:#22c55e;
-      color:#022c22;
-      transition:all 0.25s ease;
-    }
-
-    .btn:hover{
-      transform:translateY(-3px);
-      box-shadow:0 10px 20px rgba(34,197,94,0.4);
-    }
-
-    .btn.secondary{
-      background:#0ea5e9;
-      color:#022c22;
-    }
-
-    /* ===== ABOUT ===== */
-    #about p{
-      max-width:800px;
-      margin:auto;
-      text-align:center;
-      font-size:16px;
-      opacity:0.9;
-    }
-
-    /* ===== SKILLS ===== */
-    .skill{
-      margin-bottom:18px;
-    }
-
-    .skill span{
-      display:block;
-      margin-bottom:6px;
-      font-weight:600;
-    }
-
-    .bar{
-      width:100%;
-      height:10px;
-      background:#1e293b;
-      border-radius:20px;
-      overflow:hidden;
-    }
-
-    .progress{
-      height:100%;
-      background:linear-gradient(90deg,#22c55e,#4ade80);
-      width:0;
-      border-radius:20px;
-      animation:fill 1.5s forwards;
-    }
-
-    @keyframes fill{
-      to{width:var(--w);}
-    }
-
-    /* ===== PROJECTS ===== */
-    .project-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:20px;
-    }
-
-    .project-card{
-      background:rgba(2,6,23,0.9);
-      padding:20px;
-      border-radius:14px;
-      transition:0.25s;
-    }
-
-    .project-card:hover{
-      transform:translateY(-6px);
-      box-shadow:0 15px 30px rgba(0,0,0,0.5);
-    }
-
-    .project-card h3{
-      color:#22c55e;
-      margin-bottom:10px;
-      font-size:20px;
-    }
-
-    .tags span{
-      display:inline-block;
-      margin:6px 6px 0 0;
-      padding:4px 10px;
-      background:#022c22;
-      color:#22c55e;
-      border-radius:999px;
-      font-size:12px;
-    }
-
-    /* ===== CONTACT ===== */
-    form{
-      max-width:600px;
-      margin:auto;
-    }
-
-    input,textarea{
-      width:100%;
-      padding:12px;
-      margin-bottom:15px;
-      border-radius:8px;
-      border:none;
-      outline:none;
-    }
-
-    textarea{min-height:120px}
-
-    #success{
-      display:none;
-      text-align:center;
-      color:#22c55e;
-      margin-top:10px;
-    }
-
-    /* ===== FOOTER ===== */
-    footer{
-      text-align:center;
-      padding:30px;
-      opacity:0.6;
-      font-size:14px;
-    }
-
-    @media(max-width:600px){
-      header h1{font-size:38px}
-      h2{font-size:26px}
-    }
-
-#adminTrigger{
-  width:120px;
-  height:30px;
-  margin:10px auto;
-  cursor:pointer;
-  opacity:0;
+<style>
+*{
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
 }
 
-#adminLogin{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
+body{
+  margin:0;
   background:#020617;
-  padding:25px;
-  border-radius:12px;
-  display:none;
-  z-index:9999;
-  box-shadow:0 20px 40px rgba(0,0,0,0.6);
+  color:#fff;
 }
 
-#adminLogin input{
+/* HEADER */
+header{
+  padding:60px 20px;
+  text-align:center;
+}
+
+header h1{
+  color:#22c55e;
+  font-size:40px;
+  margin-bottom:10px;
+}
+
+header p{
+  opacity:0.9;
+}
+
+/* BUTTON */
+.btn{
+  padding:12px 24px;
+  margin:10px;
+  border:none;
+  border-radius:8px;
+  background:#22c55e;
+  color:#020617;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* SECTION */
+section{
+  max-width:800px;
+  margin:40px auto;
+  padding:25px;
+  background:#0f172a;
+  border-radius:12px;
+}
+
+/* ADMIN */
+#login,#admin{
+  display:none;
+}
+
+input,textarea{
   width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:6px;
+  border:none;
+}
+
+.post{
+  background:#111c4d;
+  padding:15px;
+  border-radius:8px;
   margin-bottom:12px;
 }
-
-#adminLogin button{
-  width:100%;
-}
-
-#admin{
-  display:none;
-}
-
-.btn,
-button {
-  position: relative;
-  z-index: 1000;
-  pointer-events: auto;
-}
-
-
-header,
-section {
-  position: relative;
-  z-index: 100;
-}
-
-/* FORCE CLICK FIX */
-button,
-.btn {
-  position: relative !important;
-  z-index: 9999 !important;
-  pointer-events: auto !important;
-}
-/* 🔥 CLICK FIX – background disable */
-body * {
-  pointer-events: auto;
-}
-
-body::before,
-body::after {
-  pointer-events: none !important;
-}
-
-/* If any full screen bg div exists */
-.background,
-.bg,
-.overlay {
-  pointer-events: none !important;
-}
-
-/* Force buttons clickable */
-button,
-.btn,
-input {
-  pointer-events: auto !important;
-  position: relative;
-  z-index: 99999;
-}
-
-  </style>
+</style>
 </head>
 
 <body>
 
-<!-- HERO -->
 <header>
   <h1>Raj Bag</h1>
-  <p>Entry-Level Data Analyst | Excel & Data Cleaning Specialist</p>
+  <p>Entry-Level Data Analyst | Excel Specialist</p>
 
-  <div class="hero-buttons">
-    <a href="Raj_Bag_Resume.pdf" download><button class="btn">Download Resume</button></a>
-    <a href="https://www.linkedin.com" target="_blank"><button class="btn secondary">LinkedIn</button></a>
-  </div>
-
-<!-- SECRET ADMIN TRIGGER -->
-<div id="adminTrigger"></div>
-
-<!-- ADMIN LOGIN -->
-<div id="adminLogin">
-  <h3>Admin Login</h3>
-  <input type="password" id="adminPass" placeholder="Admin Password">
-  <button onclick="loginAdmin()">Login</button>
-</div>
-
+  <button class="btn" id="adminBtn">Admin Login</button>
 </header>
 
-<!-- ABOUT -->
-<section id="about">
-  <h2>About Me</h2>
-  <p>
-    I am an entry-level data analyst with strong skills in MS Excel, data cleaning,
-    and reporting. I enjoy transforming raw data into meaningful insights and
-    continuously learning new tools to improve efficiency and accuracy.
-  </p>
+<section id="login">
+  <h2>Admin Login</h2>
+  <input type="password" id="adminPass" placeholder="Password">
+  <button class="btn" id="loginBtn">Login</button>
 </section>
 
-<!-- SKILLS -->
-<section id="skills">
-  <h2>Skills</h2>
-
-  <div class="skill">
-    <span>MS Excel</span>
-    <div class="bar"><div class="progress" style="--w:90%"></div></div>
-  </div>
-
-  <div class="skill">
-    <span>Data Analytics</span>
-    <div class="bar"><div class="progress" style="--w:85%"></div></div>
-  </div>
-
-  <div class="skill">
-    <span>Data Entry Accuracy</span>
-    <div class="bar"><div class="progress" style="--w:95%"></div></div>
-  </div>
-
-  <div class="skill">
-    <span>AI Tools</span>
-    <div class="bar"><div class="progress" style="--w:75%"></div></div>
-  </div>
+<section id="admin">
+  <h2>Admin Panel</h2>
+  <p>Welcome Admin ✅</p>
+  <button class="btn" id="logoutBtn">Logout</button>
 </section>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <h2>Projects</h2>
-
-  <div class="project-grid">
-
-    <div class="project-card">
-      <h3>📊 Excel Sales Dashboard</h3>
-      <p>Interactive Excel dashboard using Pivot Tables, Charts, and data cleaning techniques.</p>
-      <div class="tags">
-        <span>Excel</span><span>Dashboard</span>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <h3>📈 Data Analysis Report</h3>
-      <p>Cleaned datasets and generated insights to support decision making.</p>
-      <div class="tags">
-        <span>Analytics</span><span>Reporting</span>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <h3>🤖 AI Portfolio Website</h3>
-      <p>Personal portfolio with admin panel, posts, and contact form.</p>
-      <div class="tags">
-        <span>HTML</span><span>CSS</span><span>JavaScript</span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <h2>Contact Me</h2>
-
-  <form action="https://formspree.io/f/xzdzoyyk" method="POST">
-    <input type="text" name="name" placeholder="Your Name" required />
-    <input type="email" name="email" placeholder="Your Email" required />
-    <textarea name="message" placeholder="Your Message" required></textarea>
-    <button class="btn" type="submit">Send Message</button>
-  </form>
-
-  <p id="success">✅ Thank you! Message sent successfully.</p>
-</section>
-
-<!-- ADMIN LOGIN -->
-<div id="adminLogin">
-  <h3>Admin Login</h3>
-  <input type="password" id="adminPass" placeholder="Admin Password">
-  <button onclick="loginAdmin()">Login</button>
-</div>
-
-<footer>
-  © 2026 Raj Bag · Data Analyst Portfolio
-</footer>
 
 <script>
 const PASSWORD = "raj123";
 
+const adminBtn = document.getElementById("adminBtn");
 const loginBox = document.getElementById("login");
-const adminBox = document.getElementById("admin");
 const loginBtn = document.getElementById("loginBtn");
+const adminBox = document.getElementById("admin");
+const logoutBtn = document.getElementById("logoutBtn");
 
-loginBtn.addEventListener("click", () => {
+adminBtn.onclick = () => {
+  loginBox.style.display = "block";
+};
+
+loginBtn.onclick = () => {
   const pass = document.getElementById("adminPass").value;
-
   if(pass === PASSWORD){
     loginBox.style.display = "none";
     adminBox.style.display = "block";
-    alert("✅ Admin Login Successful");
-  } else {
-    alert("❌ Wrong Password");
+    alert("Admin Login Successful");
+  }else{
+    alert("Wrong Password");
   }
-});
+};
+
+logoutBtn.onclick = () => {
+  adminBox.style.display = "none";
+};
 </script>
-
-
 
 </body>
 </html>
