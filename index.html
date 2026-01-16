@@ -1,1105 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>
-Raj Bag | Portfolio
-<meta name="description" content="Raj Bag – Data Entry, Data Analytics, Excel Expert portfolio. Admin posts, contact form, and modern UI.">
-<meta name="keywords" content="Raj Bag, Data Entry, Data Analytics, Excel Expert, Portfolio">
-<meta name="author" content="Raj Bag">
-
-<!-- Open Graph (Facebook / LinkedIn) -->
-<meta property="og:title" content="Raj Bag | Portfolio">
-<meta property="og:description" content="Data Entry • Data Analytics • Excel Expert">
-<meta property="og:type" content="website">
-<meta property="og:url" content=“https://rajbag986-create.github.io/raj-portfolio/
-<meta property="og:image" content="https://rajbag986-create.github.io/raj-portfolio/og-image.png">
-
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Raj Bag | Portfolio">
-<meta name="twitter:description" content="Data Entry • Data Analytics • Excel Expert">
-<meta name="twitter:image" content="https://YOUR_USERNAME.github.io/raj-portfolio/og-image.png">
-
-
-</title>
-
-<style>
-*{
-  box-sizing:border-box;
-  font-family:Arial, Helvetica, sans-serif;
-}
-
-body{
-  margin:0;
-  background:#050b1e;
-  color:#fff;
-  text-align:center;
-}
-
-/* HEADER */
-header{
-  padding:60px 20px;
-}
-
-header h1{
-  color:#2ecc71;
-  font-size:42px;
-  margin-bottom:10px;
-}
-
-.btn{
-  padding:12px 22px;
-  margin:8px;
-  border:none;
-  border-radius:8px;
-  background:#2ecc71;
-  color:#000;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.btn:hover{opacity:0.85}
-
-/* SECTION */
-section{
-  max-width:800px;
-  margin:40px auto;
-  padding:20px;
-  background:#0b1437;
-  border-radius:12px;
-}
-
-/* ADMIN */
-#login,#admin{display:none}
-
-input,textarea{
-  width:100%;
-  padding:12px;
-  margin:10px 0;
-  border-radius:6px;
-  border:none;
-}
-
-textarea{min-height:100px}
-
-/* POSTS */
-.post{
-  background:#111c4d;
-  padding:15px;
-  border-radius:8px;
-  margin-bottom:12px;
-  text-align:left;
-}
-
-/* SUCCESS MSG */
-#successMsg{
-  display:none;
-  color:#2ecc71;
-  margin-top:10px;
-}
-/* ===== UI POLISH FORCE APPLY ===== */
-
-#admin {
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-  border: 1px solid rgba(255,255,255,0.1);
-}
-
-#admin h2, #admin h3 {
-  color: #2ecc71;
-}
-
-.btn{
-  padding:12px 22px;
-  margin:8px;
-  border:none;
-  border-radius:10px;
-  background:linear-gradient(135deg,#2ecc71,#27ae60);
-  color:#000;
-  font-weight:bold;
-  cursor:pointer;
-  transition:all .2s ease;
-}
-
-.btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 6px 15px rgba(0,0,0,0.4);
-  opacity:0.95;
-}
-
-.post{
-  background:linear-gradient(180deg,#111c4d,#0b1437);
-  padding:16px;
-  border-radius:12px;
-  margin-bottom:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.45);
-}
-
-/* ===== BUTTON ANIMATION ===== */
-.btn{
-  transition: 
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    background 0.25s ease;
-}
-
-.btn:hover{
-  transform: translateY(-3px) scale(1.04);
-  box-shadow: 0 10px 25px rgba(46, 204, 113, 0.45);
-  background: linear-gradient(135deg,#2ecc71,#27ae60);
-}
-
-.btn:active{
-  transform: scale(0.96);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-}
-
-/* ===== SECTION HOVER EFFECT ===== */
-section{
-  transition: 
-    transform 0.35s ease,
-    box-shadow 0.35s ease,
-    background 0.35s ease;
-}
-
-section:hover{
-  transform: translateY(-6px);
-  box-shadow: 0 18px 45px rgba(0,0,0,0.55);
-  background: linear-gradient(180deg,#0b1437,#0f1c4f);
-}
-
-/* ===== CARD GLOW ANIMATION ===== */
-section, .post {
-  position: relative;
-  overflow: hidden;
-}
-
-section::after, .post::after {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  background: linear-gradient(
-    120deg,
-    transparent 30%,
-    rgba(46, 204, 113, 0.25),
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-
-section:hover::after,
-.post:hover::after {
-  opacity: 1;
-}
-
-/* subtle pulsing glow */
-@keyframes softGlow {
-  0%   { box-shadow: 0 0 0 rgba(46,204,113,0.0); }
-  50%  { box-shadow: 0 0 25px rgba(46,204,113,0.35); }
-  100% { box-shadow: 0 0 0 rgba(46,204,113,0.0); }
-}
-
-section:hover,
-.post:hover {
-  animation: softGlow 1.8s ease-in-out infinite;
-}
-
-/* ===== SCROLL REVEAL ===== */
-.reveal{
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity .8s ease, transform .8s ease;
-  will-change: opacity, transform;
-}
-
-.reveal.active{
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ===== GLASSMORPHISM UPGRADE ===== */
-
-/* Glass effect for sections */
-section{
-  background: rgba(15, 28, 79, 0.55);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid rgba(255,255,255,0.12);
-}
-
-/* Glass effect for posts */
-.post{
-  background: rgba(17, 28, 77, 0.55);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.12);
-}
-
-/* Header glass touch */
-header{
-  background: linear-gradient(
-    180deg,
-    rgba(5,11,30,0.85),
-    rgba(5,11,30,0.4)
-  );
-  backdrop-filter: blur(10px);
-}
-
-/* Inputs glass style */
-input, textarea{
-  background: rgba(255,255,255,0.08);
-  color: #fff;
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255,255,255,0.15);
-}
-
-input::placeholder,
-textarea::placeholder{
-  color: rgba(255,255,255,0.65);
-}
-
-/* ===== MOBILE POLISH ===== */
-@media (max-width: 768px){
-
-  /* Disable hover/animations on touch devices */
-  .btn:hover,
-  section:hover,
-  .post:hover{
-    transform: none !important;
-    box-shadow: none !important;
-    animation: none !important;
-  }
-
-  section::after,
-  .post::after{
-    opacity: 0 !important;
-  }
-
-  /* Improve spacing */
-  section{
-    margin: 20px 12px;
-    padding: 18px;
-  }
-
-  header{
-    padding: 40px 16px;
-  }
-
-  header h1{
-    font-size: 32px;
-  }
-
-  /* Buttons full-width for easy tap */
-  .btn{
-    width: 100%;
-    max-width: 100%;
-    margin: 10px 0;
-    padding: 14px;
-    font-size: 16px;
-  }
-
-  /* Inputs comfortable tap area */
-  input, textarea{
-    font-size: 16px;
-    padding: 14px;
-  }
-
-  /* Images responsive */
-  img{
-    max-width: 100%;
-    height: auto;
-  }
-}
-/* Performance hints */
-*{
-  -webkit-tap-highlight-color: transparent;
-}
-
-img{
-  loading: lazy;
-}
-
-/* ===== PROJECTS SECTION ===== */
-.project-list{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-}
-
-.project-card{
-  background: rgba(17, 28, 77, 0.6);
-  border-radius: 14px;
-  padding: 18px;
-  text-align: left;
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.45);
-  transition: transform .3s ease, box-shadow .3s ease;
-}
-
-.project-card:hover{
-  transform: translateY(-6px);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.6);
-}
-
-.project-card h3{
-  margin-top: 0;
-  color: #2ecc71;
-}
-
-.project-card p{
-  font-size: 15px;
-  line-height: 1.6;
-  opacity: 0.9;
-}
-
-.tech{
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 13px;
-  padding: 6px 12px;
-  border-radius: 20px;
-  background: rgba(46,204,113,0.15);
-  color: #2ecc71;
-}
-
-/* ===== SKILLS PROGRESS BARS ===== */
-.skill{
-  margin: 18px 0;
-}
-
-.skill span{
-  display:block;
-  margin-bottom:8px;
-  font-weight:600;
-  color:#eafaf1;
-}
-
-.bar{
-  height: 12px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.fill{
-  height: 100%;
-  width: 0;
-  border-radius: 20px;
-  background: linear-gradient(135deg,#2ecc71,#27ae60);
-  box-shadow: 0 6px 15px rgba(46,204,113,0.45);
-  animation: grow 1.6s ease forwards;
-}
-
-@keyframes grow{
-  to{ width: var(--w); }
-}
-
-/* ===== SKILL BADGES ===== */
-.skill-badges{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 16px 0 24px;
-}
-
-.badge{
-  padding: 8px 14px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 600;
-  background: rgba(46,204,113,0.15);
-  color: #2ecc71;
-  border: 1px solid rgba(46,204,113,0.35);
-  backdrop-filter: blur(6px);
-  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-}
-
-.badge:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(46,204,113,0.35);
-  background: rgba(46,204,113,0.25);
-}
-
-/* ===== PROJECT IMAGES + LINKS ===== */
-.project-card img{
-  width: 100%;
-  border-radius: 12px;
-  margin-bottom: 12px;
-  object-fit: cover;
-}
-
-.project-links{
-  margin: 10px 0;
-}
-
-.project-links a{
-  display: inline-block;
-  margin-right: 10px;
-  margin-bottom: 6px;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: none;
-  background: rgba(46,204,113,0.15);
-  color: #2ecc71;
-  border: 1px solid rgba(46,204,113,0.35);
-  transition: all .2s ease;
-}
-
-.project-links a:hover{
-  background: rgba(46,204,113,0.3);
-  transform: translateY(-2px);
-}
-
-/* ===== ABOUT ME ===== */
-.about-text{
-  font-size: 16px;
-  line-height: 1.75;
-  margin-bottom: 14px;
-  opacity: 0.95;
-}
-
-/* ===== BACKGROUND STYLE ===== */
-body{
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  transition: background-image .6s ease;
-}
-.project-card{
-  background:#111c4d;
-  padding:20px;
-  border-radius:12px;
-  margin-bottom:20px;
-  text-align:left;
-  transition:0.3s;
-}
-
-.project-card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 10px 30px rgba(46,204,113,0.2);
-}
-
-.project-card h3{
-  margin-top:0;
-}
-
-.tag{
-  display:inline-block;
-  margin-top:8px;
-  margin-right:6px;
-  padding:4px 10px;
-  border-radius:20px;
-  background:#2ecc71;
-  color:#000;
-  font-size:12px;
-}
-
-.skill{
-  margin-bottom:20px;
-  text-align:left;
-}
-
-.skill span{
-  display:block;
-  margin-bottom:6px;
-  font-weight:bold;
-}
-
-.bar{
-  width:100%;
-  height:12px;
-  background:#1b255e;
-  border-radius:10px;
-  overflow:hidden;
-}
-
-.progress{
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,#2ecc71,#00ffcc);
-  border-radius:10px;
-  transition:width 1.5s ease;
-}
-
-/* 🔥 FIX duplicate Projects & Skills */
-section section {
-  display: none;
-}
-
-/* Only keep top-level sections */
-body > section {
-  display: block;
-}
-
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raj Bag | Data Analyst Portfolio</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body{
+      background: linear-gradient(135deg,#020617,#020b2a);
+      color:#e5e7eb;
+      line-height:1.6;
+    }
+
+    /* ===== COMMON ===== */
+    section{
+      max-width:1000px;
+      margin:60px auto;
+      padding:30px;
+      background:rgba(15,23,42,0.85);
+      border-radius:16px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    h2{
+      text-align:center;
+      margin-bottom:30px;
+      color:#22c55e;
+      font-size:32px;
+    }
+
+    /* ===== HERO ===== */
+    header{
+      text-align:center;
+      padding:90px 20px 70px;
+    }
+
+    header h1{
+      font-size:48px;
+      color:#22c55e;
+      margin-bottom:10px;
+    }
+
+    header p{
+      font-size:18px;
+      opacity:0.9;
+      margin-bottom:30px;
+    }
+
+    .hero-buttons{
+      display:flex;
+      justify-content:center;
+      gap:15px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:12px 26px;
+      border:none;
+      border-radius:10px;
+      font-size:15px;
+      font-weight:600;
+      cursor:pointer;
+      background:#22c55e;
+      color:#022c22;
+      transition:all 0.25s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-3px);
+      box-shadow:0 10px 20px rgba(34,197,94,0.4);
+    }
+
+    .btn.secondary{
+      background:#0ea5e9;
+      color:#022c22;
+    }
+
+    /* ===== ABOUT ===== */
+    #about p{
+      max-width:800px;
+      margin:auto;
+      text-align:center;
+      font-size:16px;
+      opacity:0.9;
+    }
+
+    /* ===== SKILLS ===== */
+    .skill{
+      margin-bottom:18px;
+    }
+
+    .skill span{
+      display:block;
+      margin-bottom:6px;
+      font-weight:600;
+    }
+
+    .bar{
+      width:100%;
+      height:10px;
+      background:#1e293b;
+      border-radius:20px;
+      overflow:hidden;
+    }
+
+    .progress{
+      height:100%;
+      background:linear-gradient(90deg,#22c55e,#4ade80);
+      width:0;
+      border-radius:20px;
+      animation:fill 1.5s forwards;
+    }
+
+    @keyframes fill{
+      to{width:var(--w);}
+    }
+
+    /* ===== PROJECTS ===== */
+    .project-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:20px;
+    }
+
+    .project-card{
+      background:rgba(2,6,23,0.9);
+      padding:20px;
+      border-radius:14px;
+      transition:0.25s;
+    }
+
+    .project-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 15px 30px rgba(0,0,0,0.5);
+    }
+
+    .project-card h3{
+      color:#22c55e;
+      margin-bottom:10px;
+      font-size:20px;
+    }
+
+    .tags span{
+      display:inline-block;
+      margin:6px 6px 0 0;
+      padding:4px 10px;
+      background:#022c22;
+      color:#22c55e;
+      border-radius:999px;
+      font-size:12px;
+    }
+
+    /* ===== CONTACT ===== */
+    form{
+      max-width:600px;
+      margin:auto;
+    }
+
+    input,textarea{
+      width:100%;
+      padding:12px;
+      margin-bottom:15px;
+      border-radius:8px;
+      border:none;
+      outline:none;
+    }
+
+    textarea{min-height:120px}
+
+    #success{
+      display:none;
+      text-align:center;
+      color:#22c55e;
+      margin-top:10px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer{
+      text-align:center;
+      padding:30px;
+      opacity:0.6;
+      font-size:14px;
+    }
+
+    @media(max-width:600px){
+      header h1{font-size:38px}
+      h2{font-size:26px}
+    }
+  </style>
 </head>
 
 <body>
 
+<!-- HERO -->
 <header>
   <h1>Raj Bag</h1>
-<p>Entry-Level Data Analyst | Excel & Data Cleaning Specialist</p>
+  <p>Entry-Level Data Analyst | Excel & Data Cleaning Specialist</p>
 
-
-  <button class="btn" id="adminBtn">Admin Login</button>
-
-  <a href="Raj_Bag_Resume.pdf" download>
-    <button class="btn">⬇️ Download Resume</button>
-  </a>
+  <div class="hero-buttons">
+    <a href="Raj_Bag_Resume.pdf" download><button class="btn">Download Resume</button></a>
+    <a href="https://www.linkedin.com" target="_blank"><button class="btn secondary">LinkedIn</button></a>
+  </div>
 </header>
 
-<!-- ADMIN LOGIN -->
-<section id="login">
-  <h2>Admin Login</h2>
-  <input type="password" id="adminPass" placeholder="Admin Password">
-  <button class="btn" id="loginBtn">Login</button>
-</section>
-
-<!-- ADMIN PANEL -->
-<section id="admin" class="reveal">
-  <h2>Create Post</h2>
-  <textarea id="postText" placeholder="Write post..."></textarea>
-<input type="file" id="postImage" accept="image/*">
-
-  <label>
-    <input type="checkbox" id="privatePost"> Private (Admin only)
-  </label><br><br>
-
-
-  <button class="btn" id="publishBtn">Publish</button>
-
-<hr style="margin:30px 0;">
-
-<h3>Change Admin Password</h3>
-
-<input type="password" id="oldPass" placeholder="Current Password">
-<input type="password" id="newPass" placeholder="New Password">
-
-<button class="btn" id="changePassBtn">
-  Change Password
-</button>
-<br><br>
-
-<button class="btn" id="logoutBtn"
-        style="background:#ff4d4d; display:none;">
-  🚪 Logout
-</button>
-
-<hr style="margin:30px 0;">
-
-<h3>Change Website Background</h3>
-
-<input type="file" id="bgInput" accept="image/*">
-
-<button class="btn" id="saveBgBtn">
-  Save Background
-</button>
-
-</section>
-
-<!-- POSTS -->
-<section class="reveal">
-  <h2>My Posts</h2>
-  <div id="posts"></div>
-</section>
-
-
-<!-- PROJECTS -->
-<section>
-  <h2>Skills</h2>
-
-  <div class="skill">
-    <span>MS Excel</span>
-    <div class="bar">
-      <div class="progress" data-width="90%"></div>
-    </div>
-  </div>
-
-  <div class="skill">
-    <span>Data Analytics</span>
-    <div class="bar">
-      <div class="progress" data-width="80%"></div>
-    </div>
-  </div>
-
-  <div class="skill">
-    <span>Data Entry</span>
-    <div class="bar">
-      <div class="progress" data-width="85%"></div>
-    </div>
-  </div>
-
-  <div class="skill">
-    <span>AI Tools</span>
-    <div class="bar">
-      <div class="progress" data-width="70%"></div>
-    </div>
-  </div>
-</section>
-
-  <div class="skill">
-    <span>MS Excel</span>
-    <div class="bar">
-      <div class="progress" data-width="90%"></div>
-    </div>
-  </div>
-
-  <div class="skill">
-    <span>Data Analytics</span>
-    <div class="bar">
-      <div class="progress" data-width="80%"></div>
-    </div>
-  </div>
-
-  <div class="skill">
-    <span>Data Entry</span>
-    <div class="bar">
-      <div class="progress" data-width="85%"></div>
-    </div>
-  </div>
-
-  <div class="skill">
-    <span>AI Tools</span>
-    <div class="bar">
-      <div class="progress" data-width="70%"></div>
-    </div>
-  </div>
-
-
-  <div class="project-card">
-    <img src="images/excel-dashboard.png" alt="Excel Dashboard Project">
-    <h3>📊 Excel Sales Dashboard</h3>
-    <p>Interactive Excel dashboard using formulas, charts, and cleaned datasets.</p>
-    <div class="project-links">
-      <a href="#" target="_blank">Live Demo</a>
-      <a href="#" target="_blank">Details</a>
-    </div>
-  </div>
-
-</div>
-
- </section>
-
-<section>
-<section id="projects">
-  <h2 class="section-title">Projects</h2>
-
-  <div class="project-list">
-
-    <div class="project-card">
-      <img src="images/excel-dashboard.png" alt="Excel Dashboard Project">
-      <h3>📊 Excel Sales Dashboard</h3>
-      <p>
-        Interactive Excel dashboard using formulas, charts,
-        and cleaned datasets to analyze monthly sales.
-      </p>
-      <div class="project-links">
-        <a href="#" target="_blank">Live Demo</a>
-        <a href="#" target="_blank">Details</a>
-      </div>
-      <span class="tech">MS Excel • Data Analysis</span>
-    </div>
-
-    <div class="project-card">
-      <img src="images/data-entry.png" alt="Data Entry Project">
-      <h3>🧾 Data Entry Automation</h3>
-      <p>
-        Structured templates and workflows to improve
-        data entry accuracy and speed.
-      </p>
-      <div class="project-links">
-        <a href="#" target="_blank">Case Study</a>
-      </div>
-      <span class="tech">Data Entry • Accuracy</span>
-    </div>
-
-    <div class="project-card">
-      <img src="images/portfolio-site.png" alt="Portfolio Website">
-      <h3>🤖 AI Portfolio Website</h3>
-      <p>
-        Personal portfolio with admin panel, posts,
-        image upload, and contact form.
-      </p>
-      <div class="project-links">
-        <a href="https://rajbag986.github.io/raj-portfolio/"
-           target="_blank">Live Site</a>
-        <a href="https://github.com/rajbag986/raj-portfolio"
-           target="_blank">GitHub</a>
-      </div>
-      <span class="tech">HTML • CSS • JavaScript</span>
-    </div>
-
-  </div>
-</section>
-
-<!-- ABOUT ME -->
-<section class="reveal">
+<!-- ABOUT -->
+<section id="about">
   <h2>About Me</h2>
-
-  <p class="about-text">
-    I am a dedicated and detail-oriented professional with strong skills in
-    <strong>Data Entry, Data Analytics, and MS Excel</strong>.
-    I specialize in maintaining high accuracy, organizing large datasets,
-    and creating meaningful reports that support business decisions.
-  </p>
-
-  <p class="about-text">
-    I enjoy working with numbers, improving workflows, and using
-    <strong>AI tools</strong> to enhance productivity.
-    I am a fast learner, self-motivated, and always eager to grow
-    in a challenging professional environment.
-  </p>
-
-  <p class="about-text">
-    Currently, I am seeking opportunities where I can contribute my skills,
-    learn from experienced teams, and build a long-term career in
-    data-driven roles.
+  <p>
+    I am an entry-level data analyst with strong skills in MS Excel, data cleaning,
+    and reporting. I enjoy transforming raw data into meaningful insights and
+    continuously learning new tools to improve efficiency and accuracy.
   </p>
 </section>
 
 <!-- SKILLS -->
-<section class="reveal">
+<section id="skills">
   <h2>Skills</h2>
-
-<!-- SKILL BADGES -->
-<div class="skill-badges">
-  <span class="badge">📊 MS Excel</span>
-  <span class="badge">🧮 Data Analytics</span>
-  <span class="badge">⌨️ Data Entry</span>
-  <span class="badge">🤖 AI Tools</span>
-  <span class="badge">📈 Reporting</span>
-  <span class="badge">🧹 Data Cleaning</span>
-</div>
 
   <div class="skill">
     <span>MS Excel</span>
-    <div class="bar"><div class="fill" style="--w:90%"></div></div>
-  </div>
-
-  <div class="skill">
-    <span>Data Entry Accuracy</span>
-    <div class="bar"><div class="fill" style="--w:95%"></div></div>
+    <div class="bar"><div class="progress" style="--w:90%"></div></div>
   </div>
 
   <div class="skill">
     <span>Data Analytics</span>
-    <div class="bar"><div class="fill" style="--w:80%"></div></div>
+    <div class="bar"><div class="progress" style="--w:85%"></div></div>
+  </div>
+
+  <div class="skill">
+    <span>Data Entry Accuracy</span>
+    <div class="bar"><div class="progress" style="--w:95%"></div></div>
   </div>
 
   <div class="skill">
     <span>AI Tools</span>
-    <div class="bar"><div class="fill" style="--w:70%"></div></div>
+    <div class="bar"><div class="progress" style="--w:75%"></div></div>
   </div>
-
 </section>
 
+<!-- PROJECTS -->
+<section id="projects">
+  <h2>Projects</h2>
 
+  <div class="project-grid">
+
+    <div class="project-card">
+      <h3>📊 Excel Sales Dashboard</h3>
+      <p>Interactive Excel dashboard using Pivot Tables, Charts, and data cleaning techniques.</p>
+      <div class="tags">
+        <span>Excel</span><span>Dashboard</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <h3>📈 Data Analysis Report</h3>
+      <p>Cleaned datasets and generated insights to support decision making.</p>
+      <div class="tags">
+        <span>Analytics</span><span>Reporting</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <h3>🤖 AI Portfolio Website</h3>
+      <p>Personal portfolio with admin panel, posts, and contact form.</p>
+      <div class="tags">
+        <span>HTML</span><span>CSS</span><span>JavaScript</span>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 <!-- CONTACT -->
-<section class="reveal">
+<section id="contact">
   <h2>Contact Me</h2>
 
-  <form id="contactForm" method="POST" action="https://formspree.io/f/xzdzoyyk">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Your Email" required>
+  <form action="https://formspree.io/f/xzdzoyyk" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
     <textarea name="message" placeholder="Your Message" required></textarea>
     <button class="btn" type="submit">Send Message</button>
   </form>
-<p style="opacity:0.7;font-size:14px;">
-  📍 Available for Remote & On-site opportunities
-</p>
 
-  <p id="successMsg">✅ Thank you! Message sent successfully.</p>
+  <p id="success">✅ Thank you! Message sent successfully.</p>
 </section>
 
-<!-- SCRIPT -->
-<script>
-const PASSWORD = "raj123";
-
-/* ADMIN */
-const adminBtn = document.getElementById("adminBtn");
-const loginBox = document.getElementById("login");
-const loginBtn = document.getElementById("loginBtn");
-const adminBox = document.getElementById("admin");
-const logoutBtn = document.getElementById("logoutBtn");
-
-const postInput = document.getElementById("postText");
-const publishBtn = document.getElementById("publishBtn");
-const postImageInput = document.getElementById("postImage");
-const bgInput = document.getElementById("bgInput");
-const saveBgBtn = document.getElementById("saveBgBtn");
-
-const privateCheckbox = document.getElementById("privatePost");
-const postsDiv = document.getElementById("posts");
-
-let isAdmin = false;
-let posts = JSON.parse(localStorage.getItem("posts")) || [];
-
-/* ADMIN LOGIN */
-adminBtn.onclick = () => {
-  loginBox.style.display = "block";
-  loginBox.scrollIntoView({behavior:"smooth"});
-};
-
-loginBtn.onclick = () => {
-  if (
-  document.getElementById("adminPass").value ===
-  localStorage.getItem("adminPassword")
-) {
-
-    isAdmin = true;
-    localStorage.setItem("isAdmin","yes");
-
-    loginBox.style.display="none";
-    adminBox.style.display="block";
-   logoutBtn.style.display = "inline-block";
-
-    renderPosts();
-    alert("Admin Login Successful");
-  }else{
-    alert("Wrong Password");
-  }
-};
-
-/* ADD POST */
-publishBtn.onclick = () => {
-  if (!postInput.value.trim()) return;
-
-  const file = postImageInput.files[0];
-
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      savePost(reader.result);
-    };
-    reader.readAsDataURL(file);
-  } else {
-    savePost(null);
-  }
-};
-
-function savePost(imageData) {
-  posts.unshift({
-    text: postInput.value,
-    private: privateCheckbox.checked,
-    time: new Date().toLocaleString(),
-    image: imageData
-  });
-
-  localStorage.setItem("posts", JSON.stringify(posts));
-
-  postInput.value = "";
-  postImageInput.value = "";
-  privateCheckbox.checked = false;
-
-  renderPosts();
-}
-
-
-/* RENDER POSTS */
-function renderPosts() {
-  postsDiv.innerHTML = "";
-
-  posts.forEach((p, i) => {
-    if (p.private && !isAdmin) return;
-
-    const div = document.createElement("div");
-    div.className = "post";
-
-    div.innerHTML = `
-      <small style="opacity:0.7;">🕒 ${p.time || ""}</small>
-
-      ${p.image ? `
-        <img src="${p.image}"
-             style="width:100%;margin:10px 0;border-radius:8px;">
-      ` : ""}
-
-      <p>${p.text}</p>
-
-      ${isAdmin ? `
-        <button onclick="editPost(${i})">Edit</button>
-        <button onclick="deletePost(${i})">Delete</button>
-      ` : ""}
-    `;
-
-    postsDiv.appendChild(div);
-  });
-}
-
-function deletePost(i){
-  if(confirm("Delete post?")){
-    posts.splice(i,1);
-    localStorage.setItem("posts",JSON.stringify(posts));
-    renderPosts();
-  }
-}
-
-function editPost(i){
-  const t = prompt("Edit post",posts[i].text);
-  if(t){
-    posts[i].text=t;
-    localStorage.setItem("posts",JSON.stringify(posts));
-    renderPosts();
-  }
-}
-
-renderPosts();
-
-/* CONTACT FORM */
-const form = document.getElementById("contactForm");
-const successMsg = document.getElementById("successMsg");
-
-form.addEventListener("submit", async e=>{
-  e.preventDefault();
-
-  const res = await fetch(form.action,{
-    method:"POST",
-    body:new FormData(form),
-    headers:{Accept:"application/json"}
-  });
-
-  if(res.ok){
-    form.reset();
-    successMsg.style.display="block";
-    setTimeout(()=>successMsg.style.display="none",5000);
-
-  }else{
-    alert("Submission failed");
-  }
-});
-// ===== PASSWORD CHANGE SYSTEM =====
-
-// default password (first time)
-if (!localStorage.getItem("adminPassword")) {
-  localStorage.setItem("adminPassword", PASSWORD);
-}
-
-// password change button
-const changePassBtn = document.getElementById("changePassBtn");
-
-changePassBtn.onclick = () => {
-  const oldPass = document.getElementById("oldPass").value;
-  const newPass = document.getElementById("newPass").value;
-
-  const savedPass = localStorage.getItem("adminPassword");
-
-  if (oldPass !== savedPass) {
-    alert("❌ Current password is wrong");
-    return;
-  }
-
-  if (newPass.length < 4) {
-    alert("❌ New password must be at least 4 characters");
-    return;
-  }
-
-  localStorage.setItem("adminPassword", newPass);
-
-  alert("✅ Password changed successfully");
-
-  document.getElementById("oldPass").value = "";
-  document.getElementById("newPass").value = "";
-};
-
-logoutBtn.onclick = () => {
-  isAdmin = false;
-  localStorage.removeItem("isAdmin");
-
-  adminBox.style.display = "none";
-  loginBox.style.display = "none";
- logoutBtn.style.display = "none";
-  alert("🚪 Logged out successfully");
-  renderPosts();
-};
-
-
-// ===== AUTO LOGIN CHECK =====
-if (localStorage.getItem("isAdmin") === "yes") {
-  isAdmin = true;
-  adminBox.style.display = "block";
-  renderPosts();
-}
-
-// ===== SCROLL REVEAL LOGIC =====
-const reveals = document.querySelectorAll('.reveal');
-
-const revealOnScroll = () => {
-  const windowHeight = window.innerHeight;
-  reveals.forEach(el => {
-    const top = el.getBoundingClientRect().top;
-    if (top < windowHeight - 80) {
-      el.classList.add('active');
-    }
-  });
-};
-
-window.addEventListener('scroll', revealOnScroll);
-window.addEventListener('load', revealOnScroll);
-
-// Prevent double-click issues on buttons
-document.querySelectorAll('.btn').forEach(b=>{
-  b.addEventListener('click',()=> {
-    b.disabled = true;
-    setTimeout(()=>b.disabled=false, 300);
-  });
-});
-// ===== BACKGROUND CHANGE SYSTEM =====
-
-// Load saved background on page load
-const savedBg = localStorage.getItem("siteBackground");
-if (savedBg) {
-  document.body.style.backgroundImage = `url(${savedBg})`;
-}
-
-// Save new background
-saveBgBtn.onclick = () => {
-  const file = bgInput.files[0];
-  if (!file) {
-    alert("Please select an image");
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = () => {
-    document.body.style.backgroundImage = `url(${reader.result})`;
-    localStorage.setItem("siteBackground", reader.result);
-    alert("✅ Background saved successfully");
-  };
-  reader.readAsDataURL(file);
-};
-
-const skills = document.querySelectorAll(".progress");
-
-const skillObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.style.width = entry.target.dataset.width;
-    }
-  });
-},{ threshold:0.4 });
-
-skills.forEach(skill => skillObserver.observe(skill));
-
-</script>
-
-<footer style="
-  text-align:center;
-  padding:25px 15px;
-  font-size:14px;
-  opacity:0.75;
-">
-  © 2026 Raj Bag • Data & Analytics Portfolio  
-  <br>
-  <a href="https://www.linkedin.com/in/raj-bag2986/" target="_blank"
-     style="color:#2ecc71;text-decoration:none;">
-    LinkedIn
-  </a>
+<footer>
+  © 2026 Raj Bag · Data Analyst Portfolio
 </footer>
 
 </body>
