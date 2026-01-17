@@ -79,21 +79,30 @@ input,textarea{
 <body>
 
 <header>
-  <h1>Raj Bag</h1>
+  <h1 id="secretName">Raj Bag</h1>
   <p>Entry-Level Data Analyst | Excel Specialist</p>
-
   <button class="btn" id="adminBtn">Admin Login</button>
 </header>
 
-<section id="login">
+<!-- LOGIN POPUP -->
+<section id="login" style="display:none;">
   <h2>Admin Login</h2>
   <input type="password" id="adminPass" placeholder="Password">
   <button class="btn" id="loginBtn">Login</button>
 </section>
 
-<section id="admin">
+<!-- ADMIN PANEL -->
+<section id="admin" style="display:none;">
   <h2>Admin Panel</h2>
 
+  <textarea id="postText" placeholder="Write a new post..."></textarea>
+  <button class="btn" id="addPostBtn">Add Post</button>
+
+  <p>Welcome Admin ✅</p>
+  <button class="btn" id="logoutBtn">Logout</button>
+</section>
+
+<!-- POSTS -->
 <section id="posts">
   <h2>My Posts</h2>
   <div id="postList"></div>
@@ -195,7 +204,37 @@ addPostBtn.onclick = () => {
 
 /* INITIAL LOAD */
 renderPosts();
+
+<script>
+const PASSWORD = "raj123";
+
+const adminBtn = document.getElementById("adminBtn");
+const loginBox = document.getElementById("login");
+const loginBtn = document.getElementById("loginBtn");
+const adminBox = document.getElementById("admin");
+const logoutBtn = document.getElementById("logoutBtn");
+
+adminBtn.onclick = () => {
+  loginBox.style.display = "block";
+};
+
+loginBtn.onclick = () => {
+  const pass = document.getElementById("adminPass").value;
+  if(pass === PASSWORD){
+    loginBox.style.display = "none";
+    adminBox.style.display = "block";
+    alert("✅ Login Successful");
+  }else{
+    alert("❌ Wrong Password");
+  }
+};
+
+logoutBtn.onclick = () => {
+  adminBox.style.display = "none";
+};
+
 </script>
+
 
 </body>
 </html>
